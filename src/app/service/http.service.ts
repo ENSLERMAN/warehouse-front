@@ -29,17 +29,13 @@ export class HttpService {
   constructor(private http: HttpClient) {
   }
 
-  login(user: string, pass: string): Observable<HttpResponse<object>> {
-    return this.http.post<HttpResponse<object>>(`${this.baseURL}/auth/login`, {
+  login(user: string, pass: string): Observable<HttpResponse<User> | HttpErrorResponse> {
+    return this.http.post<User>(`${this.baseURL}/auth/login`, {
         login: user,
         password: pass
       },
       {
         observe: 'response'
       });
-  }
-
-  getMe(): Observable<HttpResponse<User> | HttpErrorResponse> {
-    return this.http.get<User>(`${this.baseURL}/api/user/me`, {observe: 'response'});
   }
 }

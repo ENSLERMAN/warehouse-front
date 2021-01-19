@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpService } from '../../service/http.service';
+import { HttpService, User } from '../../service/http.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   hide = true;
   error = false;
+  user: User;
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -39,11 +41,16 @@ export class LoginComponent implements OnInit, OnDestroy {
       }),
       takeUntil(this.destroy$)
     ).subscribe((res) => {
-      if (res.status === 204) {
-        localStorage.setItem('isLoggedIn', 'true');
-        const user = window.btoa(this.loginForm.value.login + ':' + this.loginForm.value.pass);
-        localStorage.setItem('currentUser', user);
-        this.router.navigate(['/main']);
+      if (res.status === 200) {
+        if (!(res instanceof HttpErrorResponse)) {
+          this.user = res.body;
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('user', JSON.stringify(this.user));
+          const userFIO = window.btoa(this.loginForm.value.login + ':' + this.loginForm.value.pass);
+          localStorage.setItem('currentUser', userFIO);
+          this.router.navigate(['/main']);
+          return true;
+        }
       }
     }, () => {
       this.error = true;

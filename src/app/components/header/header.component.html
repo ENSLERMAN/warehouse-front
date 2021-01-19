@@ -1,12 +1,17 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
         <div class="container-fluid">
-            <div class="d-flex justify-content-between">
-                <div>
+            <div class="d-flex">
+                <div class="me-auto">
                     <span>Wildbananas</span>
                 </div>
-                <div>
-                    <button mat-raised-button color="warn" (click)="logout()">Выйти</button>
+                <div [style.display]="visibility==true?'block':'none'" class="px-2">
+                    <h2>{{user?.access_name}}: {{user?.surname}} {{user?.name}} {{user?.patronymic}}</h2>
+                </div>
+                <div [style.display]="visibility==true?'block':'none'" class="">
+                    <button mat-raised-button color="warn"
+                            (click)="logout()">Выйти
+                    </button>
                 </div>
             </div>
         </div>
