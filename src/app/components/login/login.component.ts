@@ -30,10 +30,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login(): boolean {
-    this.http.login({
-      login: this.loginForm.value.login,
-      password: this.loginForm.value.pass
-    }).pipe(
+    this.http.login(
+      this.loginForm.value.login,
+      this.loginForm.value.pass
+    ).pipe(
       finalize(() => {
         this.loginForm.setValue({login: '', pass: ''});
       }),
@@ -41,6 +41,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     ).subscribe((res) => {
       if (res.status === 204) {
         localStorage.setItem('isLoggedIn', 'true');
+        const user = window.btoa(this.loginForm.value.login + ':' + this.loginForm.value.pass);
+        localStorage.setItem('currentUser', user);
         this.router.navigate(['/main']);
       }
     }, () => {

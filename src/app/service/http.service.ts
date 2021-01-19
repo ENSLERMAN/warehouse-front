@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-interface User {
+export interface User {
   user_id: number;
   surname: string;
   name: string;
@@ -29,11 +29,17 @@ export class HttpService {
   constructor(private http: HttpClient) {
   }
 
-  login(data: any): Observable<HttpResponse<object> | HttpErrorResponse> {
-    return this.http.post<HttpResponse<object> | HttpErrorResponse>(`${this.baseURL}/auth/login`, data, {observe: 'response'});
+  login(user: string, pass: string): Observable<HttpResponse<object>> {
+    return this.http.post<HttpResponse<object>>(`${this.baseURL}/auth/login`, {
+        login: user,
+        password: pass
+      },
+      {
+        observe: 'response'
+      });
   }
 
-  getMe(): Observable<HttpResponse<User>> {
-    return this.http.get<User>(`${this.baseURL}/user/me`, {observe: 'response'});
+  getMe(): Observable<HttpResponse<User> | HttpErrorResponse> {
+    return this.http.get<User>(`${this.baseURL}/api/user/me`, {observe: 'response'});
   }
 }
