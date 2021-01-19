@@ -1,0 +1,25 @@
+<div class="">
+    <div class="d-flex justify-content-center">
+        <form class="mt-5" [formGroup]="loginForm" (ngSubmit)="login()">
+            <h3 class="d-flex justify-content-center">Авторизация</h3>
+            <div class="mb-3">
+                <mat-form-field appearance="fill">
+                    <mat-label>Введите ваш логин</mat-label>
+                    <input matInput placeholder="login" formControlName="login" required>
+                </mat-form-field>
+            </div>
+            <div class="mb-3">
+                <mat-form-field appearance="fill">
+                    <mat-label>Введите ваш пароль</mat-label>
+                    <input matInput
+                           placeholder="password"
+                           formControlName="pass"
+                           [type]="hide ? 'password' : 'text'"
+                           required>
+                    <mat-error *ngIf="error">Неправильный логин или пароль</mat-error>
+                </mat-form-field>
+            </div>
+            <button mat-raised-button type="submit" class="w-100" color="primary">Войти</button>
+        </form>
+    </div>
+</div>
