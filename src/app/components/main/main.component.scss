@@ -1,0 +1,18 @@
+.card-mat {
+  width: 100%;
+  cursor: pointer;
+  object-fit: contain;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.example-header-image {
+  object-fit: contain;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 13rem;
+}

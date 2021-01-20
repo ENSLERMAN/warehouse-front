@@ -1,0 +1,51 @@
+<div class="">
+    <div class="d-flex justify-content-center">
+        <form class="mt-5" [formGroup]="registerForm" (ngSubmit)="register()">
+            <h3 class="d-flex justify-content-center">Регистрация на складе</h3>
+            <div class="mb-3">
+                <mat-form-field appearance="fill">
+                    <mat-label>Введите фамилию</mat-label>
+                    <input matInput placeholder="Иванов" formControlName="surname" required>
+                </mat-form-field>
+            </div>
+            <div class="mb-3">
+                <mat-form-field appearance="fill">
+                    <mat-label>Введите имя</mat-label>
+                    <input matInput placeholder="Иван" formControlName="name" required>
+                </mat-form-field>
+            </div>
+            <div class="mb-3">
+                <mat-form-field appearance="fill">
+                    <mat-label>Введите отчество</mat-label>
+                    <input matInput placeholder="Иванович" formControlName="patronymic" required>
+                </mat-form-field>
+            </div>
+            <div class="mb-3">
+                <mat-form-field appearance="fill">
+                    <mat-label>Введите логин</mat-label>
+                    <input matInput placeholder="ivanov1" formControlName="login" required>
+                </mat-form-field>
+            </div>
+            <div class="mb-3">
+                <mat-form-field appearance="fill">
+                    <mat-label>Введите пароль</mat-label>
+                    <input matInput
+                           placeholder="supersecret"
+                           formControlName="password"
+                           required>
+                    <mat-error *ngIf="!registerForm.hasError('required')">
+                        Все поля обязательны для заполнения
+                    </mat-error>
+                </mat-form-field>
+
+            </div>
+            <button mat-raised-button
+                    type="submit"
+                    class="w-100"
+                    color="primary"
+                    [disabled]="!registerForm.valid"
+            >Регистрация
+            </button>
+        </form>
+    </div>
+</div>

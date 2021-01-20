@@ -58,6 +58,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     return false;
   }
 
+  register(): void {
+    this.router.navigate(['register']);
+  }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

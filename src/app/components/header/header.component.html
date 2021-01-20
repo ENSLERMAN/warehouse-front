@@ -3,12 +3,12 @@
         <div class="container-fluid">
             <div class="d-flex">
                 <div class="me-auto">
-                    <span>Wildbananas</span>
+                    <span [routerLink]="['/main']" class="nav-link" style="cursor: pointer">Wildbananas</span>
                 </div>
-                <div [style.display]="visibility==true?'block':'none'" class="px-2">
-                    <h2>{{user?.access_name}}: {{user?.surname}} {{user?.name}} {{user?.patronymic}}</h2>
+                <div [style.display]="visibility==true?'block-inline':'none'" class="px-3 my-auto">
+                    <h5>{{user?.access_name}}: {{user?.surname}} {{user?.name}} {{user?.patronymic}}</h5>
                 </div>
-                <div [style.display]="visibility==true?'block':'none'" class="">
+                <div [style.display]="visibility==true?'block':'none'" class="my-auto">
                     <button mat-raised-button color="warn"
                             (click)="logout()">Выйти
                     </button>

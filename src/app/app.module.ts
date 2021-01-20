@@ -16,6 +16,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BasicAuthInterceptor } from './helpers/basic-auth.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
+import { RegisterComponent } from './components/register/register.component';
+import { UsersComponent } from './components/users/users.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { ReportsComponent } from './components/reports/reports.component';
+import { CreateDispatchComponent } from './components/dispatches/create-dispatch/create-dispatch.component';
+import { CreateShipmentComponent } from './components/shipments/create-shipment/create-shipment.component';
+import { ButtonBackComponent } from './components/helpers/button-back/button-back.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -24,7 +34,13 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
     HeaderComponent,
     MainComponent,
     ShipmentsComponent,
-    DispatchesComponent
+    DispatchesComponent,
+    RegisterComponent,
+    UsersComponent,
+    ReportsComponent,
+    CreateDispatchComponent,
+    CreateShipmentComponent,
+    ButtonBackComponent
   ],
   imports: [
     HttpClientModule,
@@ -36,6 +52,10 @@ import { ErrorInterceptor } from './helpers/error.interceptor';
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
+    MatCardModule,
+    MatGridListModule,
+    MatSortModule,
+    MatTableModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true},

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 export interface User {
   user_id: number;
@@ -36,6 +37,29 @@ export class HttpService {
       },
       {
         observe: 'response'
-      });
+      }).pipe(
+      catchError((err) => {
+        alert(err);
+        return throwError(err);
+      })
+    );
+  }
+
+  register(user: string, pass: string, nam: string, surnam: string, pat: string): Observable<HttpResponse<void>> {
+    return this.http.post<void>(`${this.baseURL}/auth/register`, {
+        login: user,
+        surname: surnam,
+        name: nam,
+        patronymic: pat,
+        password: pass
+      },
+      {
+        observe: 'response'
+      }).pipe(
+      catchError((err) => {
+        alert(err);
+        return throwError(err);
+      })
+    );
   }
 }

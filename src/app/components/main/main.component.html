@@ -1,5 +1,15 @@
 <div class="container-fluid">
-    <div class="d-flex justify-content-between m-3">
-        <h2></h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4 m-1">
+        <div *ngFor="let section of sections" class="col">
+            <ng-container *ngIf="section.access === user.access_id || user.access_id === 1">
+                <mat-card class="card-mat h-100" [routerLink]="section.link">
+                    <mat-card-header>
+                        <mat-card-title>{{section.name}}</mat-card-title>
+                        <mat-card-subtitle>{{section.des}}</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image [src]="section.pic" class="example-header-image mx-auto">
+                </mat-card>
+            </ng-container>
+        </div>
     </div>
 </div>
