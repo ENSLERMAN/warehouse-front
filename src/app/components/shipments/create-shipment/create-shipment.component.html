@@ -4,4 +4,12 @@
         <h1>Создание поставки</h1>
         <div style="width: 10%"></div>
     </div>
+    <div class="w-50 my-5 mx-auto">
+        <form class="d-flex flex-column" [formGroup]="fg" (ngSubmit)="makeShip()">
+            <mat-form-field appearance="fill">
+                <mat-label>Input</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </form>
+    </div>
 </div>

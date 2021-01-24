@@ -31,7 +31,7 @@ export class MainComponent implements OnInit {
       access: 3,
       name: 'Отчёты',
       des: 'Посмотреть отчёты или запросить новый',
-      pic: `https://lh3.googleusercontent.com/proxy/IWoAadrcOowzWOPr_ImKZkuiNhfJXwakl4HWIXBAcIGV4OjdPUqQg8KBcPhNnkZXjJJ4vXvgwgu0sZIDRUXGkpOUmzO9jhbmxLkuts3J1SKCNxubrwTV3LUd`
+      pic: `https://static8.depositphotos.com/1000765/1038/i/600/depositphotos_10381501-stock-photo-3d-small-survey.jpg`
     },
     {
       link: '/dispatches/create_dispatch',

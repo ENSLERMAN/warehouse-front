@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 export interface Shipment {
@@ -18,6 +18,15 @@ export interface Shipment {
   date: string;
   product_barcode: string;
   product_amount: number;
+}
+
+export interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  amount: number;
+  barcode: string;
 }
 
 @Injectable({
@@ -44,6 +53,17 @@ export class ShipmentsService {
         alert(err);
         console.log(err);
         return [];
+      })
+    );
+  }
+
+  getProducts(): Observable<HttpResponse<Product[]>> {
+    return this.http.get<Product[]>(`${this.baseURL}/api/products/get`, {
+      observe: 'response'
+    }).pipe(
+      catchError(err => {
+        alert(err);
+        return ([]);
       })
     );
   }
