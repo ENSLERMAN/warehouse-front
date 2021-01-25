@@ -24,8 +24,8 @@ export interface Product {
   id: number;
   name: string;
   description: string;
-  price: number;
   amount: number;
+  price: number;
   barcode: string;
 }
 

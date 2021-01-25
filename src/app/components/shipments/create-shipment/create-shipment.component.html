@@ -5,11 +5,28 @@
         <div style="width: 10%"></div>
     </div>
     <div class="w-50 my-5 mx-auto">
-        <form class="d-flex flex-column" [formGroup]="fg" (ngSubmit)="makeShip()">
-            <mat-form-field appearance="fill">
-                <mat-label>Input</mat-label>
-                <input matInput>
-            </mat-form-field>
-        </form>
+        <div>
+            <form [formGroup]="fg" (ngSubmit)="makeShip()" class="w-100 d-flex flex-column">
+                <h3>Выберите товар из списка, или добавьте новый</h3>
+                <mat-form-field appearance="fill">
+                    <mat-label>Выберите товар из списка</mat-label>
+                    <mat-select multiple formControlName="productsSelected" class="w-100">
+                        <mat-option *ngFor="let prod of prods" [value]="prod">
+                            {{prod.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+            <ng-container *ngIf="fg.controls.productsSelected.value !== null">
+                <form [formGroup]="fgs">
+                    <div *ngFor="let item of selectedProds;" class="w-100 d-flex flex-column">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Введите кол-во для товара {{item.name}}</mat-label>
+                            <input type="number" matInput [formControlName]="item.barcode">
+                        </mat-form-field>
+                    </div>
+                </form>
+            </ng-container>
+        </div>
     </div>
 </div>

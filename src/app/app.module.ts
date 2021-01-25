@@ -12,7 +12,7 @@ import { ShipmentsComponent } from './components/shipments/shipments.component';
 import { DispatchesComponent } from './components/dispatches/dispatches.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BasicAuthInterceptor } from './helpers/basic-auth.interceptor';
 import { ErrorInterceptor } from './helpers/error.interceptor';
@@ -26,6 +26,7 @@ import { CreateShipmentComponent } from './components/shipments/create-shipment/
 import { ButtonBackComponent } from './components/helpers/button-back/button-back.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatGridListModule,
     MatSortModule,
     MatTableModule,
+    MatSelectModule,
+    FormsModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true},
