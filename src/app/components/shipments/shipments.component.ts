@@ -20,6 +20,10 @@ export class ShipmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSort, {static: false}) sort: MatSort;
 
   ngOnInit(): void {
+    this.initShipments();
+  }
+
+  initShipments(): void {
     this.http.getShipments().pipe(
       takeUntil(this.destroy$),
     ).subscribe(res => {

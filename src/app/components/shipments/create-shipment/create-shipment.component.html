@@ -6,13 +6,21 @@
     </div>
     <div class="w-50 my-5 mx-auto">
         <div>
-            <form [formGroup]="fg" (ngSubmit)="makeShip()" class="w-100 d-flex flex-column">
-                <h3>Выберите товар из списка, или добавьте новый</h3>
+            <form [formGroup]="fg" class="w-100 d-flex flex-column">
+                <h3>Выберите товар из списка, и/или добавьте новый</h3>
                 <mat-form-field appearance="fill">
                     <mat-label>Выберите товар из списка</mat-label>
                     <mat-select multiple formControlName="productsSelected" class="w-100">
                         <mat-option *ngFor="let prod of prods" [value]="prod">
-                            {{prod.name}}
+                            {{prod.name}}, баркод: {{prod.barcode}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Выберите поставщика</mat-label>
+                    <mat-select formControlName="suppSelected" class="w-100">
+                        <mat-option *ngFor="let item of supps" [value]="item.id">
+                            {{item.surname}} {{item.name}} {{item.patronymic}}
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
@@ -27,6 +35,55 @@
                     </div>
                 </form>
             </ng-container>
+            <hr>
+            <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()" class="w-100 d-flex flex-column">
+                <mat-form-field appearance="fill">
+                    <mat-label>Выберите кол-во нового товара</mat-label>
+                    <mat-select formControlName="numberOfTickets">
+                        <mat-option *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10]" [value]="i">{{i}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div *ngFor="let ticket of t.controls; let i = index">
+                    <mat-card class="my-2">Товар {{i + 1}}
+                        <div [formGroup]="ticket">
+                            <div class="d-flex justify-content-between w-100">
+                                <mat-form-field appearance="fill" class="w-100 m-1">
+                                    <mat-label>Введите название товара</mat-label>
+                                    <input matInput required formControlName="name">
+                                </mat-form-field>
+                                <mat-form-field appearance="fill" class="w-100 m-1">
+                                    <mat-label>Введите описание</mat-label>
+                                    <input matInput required formControlName="description">
+                                </mat-form-field>
+                            </div>
+                            <div class="d-flex justify-content-between w-100">
+                                <mat-form-field appearance="fill" class="w-100 m-1">
+                                    <mat-label>Введите кол-во товара</mat-label>
+                                    <input matInput required formControlName="amount" type="number">
+                                </mat-form-field>
+                                <mat-form-field appearance="fill" class="w-100 m-1">
+                                    <mat-label>Введите цену</mat-label>
+                                    <input matInput required formControlName="price" type="number">
+                                </mat-form-field>
+                            </div>
+                            <mat-form-field appearance="fill" hintLabel="Минимально 30 символов" class="w-100">
+                                <mat-label>Введите баркод товара</mat-label>
+                                <input matInput required formControlName="barcode" #barcode maxlength="30"
+                                       minlength="30">
+                                <mat-hint align="end">{{barcode.value?.length || 0}}/30</mat-hint>
+                            </mat-form-field>
+                        </div>
+                    </mat-card>
+                </div>
+                <div class="text-center mt-3">
+                    <button mat-raised-button color="primary"
+                            [disabled]="(!fgs.valid || !dynamicForm.valid)"
+                    >Добавить отгрузку
+                    </button>
+                    <button mat-raised-button color="accent" class="mx-3" (click)="onClear()">Отчистить поля</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

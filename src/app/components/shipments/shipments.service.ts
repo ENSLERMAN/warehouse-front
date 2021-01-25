@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 export interface Shipment {
@@ -27,6 +27,15 @@ export interface Product {
   amount: number;
   price: number;
   barcode: string;
+}
+
+export interface User {
+  user_id: number;
+  surname: string;
+  name: string;
+  patronymic: string;
+  login: string;
+  access_id: number;
 }
 
 @Injectable({
@@ -57,9 +66,36 @@ export class ShipmentsService {
     );
   }
 
+  makeShipment(supID: number, empID: number, prods: Product[]): Observable<HttpResponse<void>> {
+    return this.http.post<void>(`${this.baseURL}/api/shipments/new_shipment`, {
+      supplier_id: supID,
+      emp_id: empID,
+      products: prods
+    }, {
+      observe: 'response'
+    }).pipe(
+      catchError(err => {
+        console.error(err);
+        alert(err);
+        return throwError(err);
+      })
+    );
+  }
+
   getProducts(): Observable<HttpResponse<Product[]>> {
     return this.http.get<Product[]>(`${this.baseURL}/api/products/get`, {
       observe: 'response'
+    }).pipe(
+      catchError(err => {
+        alert(err);
+        return ([]);
+      })
+    );
+  }
+
+  getSuppliers(): Observable<HttpResponse<User[]>> {
+    return this.http.get<User[]>(`${this.baseURL}/api/user/users?access_id=4`, {
+      observe: 'response',
     }).pipe(
       catchError(err => {
         alert(err);

@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Product, ShipmentsService } from '../shipments.service';
+import { Product, ShipmentsService, User } from '../shipments.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-shipment',
@@ -12,9 +13,12 @@ import { takeUntil } from 'rxjs/operators';
 export class CreateShipmentComponent implements OnInit, OnDestroy {
   constructor(
     private http: ShipmentsService,
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
     this.fg = new FormGroup({
       productsSelected: new FormControl(null),
+      suppSelected: new FormControl(null, Validators.required)
     });
     this.fgs = new FormGroup({});
   }
@@ -25,8 +29,18 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   fg: FormGroup;
   fgs: FormGroup;
+  dynamicForm: FormGroup;
+  supps: User[];
+  emp: User;
 
   ngOnInit(): void {
+    this.http.getSuppliers().pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(v => {
+      if (v.status === 200) {
+        this.supps = v.body;
+      }
+    });
     this.http.getProducts().pipe(
       takeUntil(this.destroy$)
     ).subscribe(res => {
@@ -36,7 +50,7 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
     });
     this.fg.controls.productsSelected.valueChanges.subscribe((v: Product[]) => {
       this.selectedProds = v;
-      const fc = new FormControl('');
+      const fc = new FormControl('', Validators.required);
       v.forEach(value => {
         this.fgs.addControl(value.barcode, fc);
       });
@@ -52,11 +66,58 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
         }
       });
       this.selectedProdsForShip = prods;
-      console.log(this.selectedProdsForShip);
+    });
+    this.dynamicForm = this.formBuilder.group({
+      numberOfTickets: [''],
+      tickets: new FormArray([])
+    });
+    this.dynamicForm.controls.numberOfTickets.valueChanges.subscribe(e => {
+      const numberOfTickets = e;
+      if (this.t.length < numberOfTickets) {
+        for (let i = this.t.length; i < numberOfTickets; i++) {
+          this.t.push(this.formBuilder.group({
+            name: ['', Validators.required],
+            description: ['', [Validators.required]],
+            amount: ['', [Validators.required]],
+            price: ['', [Validators.required]],
+            barcode: ['', [Validators.required, Validators.pattern('^[0-9]*$')]]
+          }));
+        }
+      } else {
+        for (let i = this.t.length; i >= numberOfTickets; i--) {
+          this.t.removeAt(i);
+        }
+      }
     });
   }
 
-  makeShip(): void {
+  // tslint:disable-next-line:typedef
+  get f() {
+    return this.dynamicForm.controls;
+  }
+
+  // tslint:disable-next-line:typedef
+  get t() {
+    return this.f.tickets as FormArray;
+  }
+
+  onSubmit(): void {
+    if (this.dynamicForm.invalid) {
+      return;
+    }
+    const prods: Product[] = this.selectedProdsForShip.concat(this.dynamicForm.value?.tickets);
+    const suppID: number = this.fg.controls.suppSelected.value;
+    this.emp = JSON.parse(localStorage.getItem('user'));
+    console.log(this.emp);
+    this.http.makeShipment(suppID, this.emp.user_id, prods).subscribe(value => {
+      if (value.status === 204) {
+        this.router.navigate(['/shipments']);
+      }
+    });
+  }
+
+  onClear(): void {
+    this.t.reset();
   }
 
   getItemByBarcode(barcode: string, amount: number): Product {
@@ -66,6 +127,7 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
         prod = value;
         prod.amount = amount;
       }
+      delete value.id;
     });
     return prod;
   }
