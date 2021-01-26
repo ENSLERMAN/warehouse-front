@@ -79,9 +79,12 @@
                 <div class="text-center mt-3">
                     <button mat-raised-button color="primary"
                             [disabled]="(!fgs.valid || !dynamicForm.valid)"
+                            type="submit"
                     >Добавить отгрузку
                     </button>
-                    <button mat-raised-button color="accent" class="mx-3" (click)="onClear()">Отчистить поля</button>
+                    <button mat-raised-button color="accent" class="mx-3" (click)="onClear()" type="reset">Отчистить
+                        поля
+                    </button>
                 </div>
             </form>
         </div>

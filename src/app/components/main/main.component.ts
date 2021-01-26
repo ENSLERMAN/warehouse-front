@@ -17,7 +17,7 @@ export class MainComponent implements OnInit {
       access: 3,
       name: 'Поставки',
       des: 'Заполнить новую поставку',
-      pic: 'https://utmagazine.ru/uploads/content/4cf2db96fc10ecda7f64da5a75275cd5.jpg'
+      pic: 'https://static8.depositphotos.com/1064545/922/i/600/depositphotos_9220056-stock-photo-3d-worker-pushing-a-hand.jpg'
     },
     {
       link: '/dispatches',
@@ -32,6 +32,13 @@ export class MainComponent implements OnInit {
       name: 'Отчёты',
       des: 'Посмотреть отчёты или запросить новый',
       pic: `https://static8.depositphotos.com/1000765/1038/i/600/depositphotos_10381501-stock-photo-3d-small-survey.jpg`
+    },
+    {
+      link: '/reports',
+      access: 3,
+      name: 'Товары',
+      des: 'Посмотреть товары в наличии',
+      pic: `https://f.nodacdn.net/259819`
     },
     {
       link: '/dispatches/create_dispatch',

@@ -117,7 +117,8 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
   }
 
   onClear(): void {
-    this.t.reset();
+    this.dynamicForm.reset();
+    this.fgs.reset();
   }
 
   getItemByBarcode(barcode: string, amount: number): Product {

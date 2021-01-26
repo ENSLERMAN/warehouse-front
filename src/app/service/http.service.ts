@@ -38,7 +38,8 @@ export class HttpService {
       {
         observe: 'response'
       }).pipe(
-      catchError((err) => {
+      catchError(err => {
+        console.error(err);
         alert(err);
         return throwError(err);
       })
@@ -56,7 +57,8 @@ export class HttpService {
       {
         observe: 'response'
       }).pipe(
-      catchError((err) => {
+      catchError(err => {
+        console.error(err);
         alert(err);
         return throwError(err);
       })
