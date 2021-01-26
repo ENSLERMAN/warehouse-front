@@ -11,6 +11,21 @@ interface productsForDispatch {
   amount: number;
 }
 
+export interface Dispatch {
+  dispatch_id: number;
+  emp_id: number;
+  emp_surname: string;
+  emp_name: string;
+  emp_pat: string;
+  status_id: number;
+  status_name: string;
+  dispatch_date: string;
+  cus_id: number;
+  cus_surname: string;
+  cus_name: string;
+  cus_pat: string;
+}
+
 @Injectable()
 export class DispatchesService {
   constructor(
@@ -36,6 +51,18 @@ export class DispatchesService {
       date_create: date,
       products: prods
     }, {
+      observe: 'response'
+    }).pipe(
+      catchError(err => {
+        console.error(err);
+        alert(err);
+        return throwError(err);
+      })
+    );
+  }
+
+  getDispathes(): Observable<HttpResponse<Dispatch[]>> {
+    return this.http.get<Dispatch[]>(`${environment.baseURL}/api/dispatch/all`, {
       observe: 'response'
     }).pipe(
       catchError(err => {

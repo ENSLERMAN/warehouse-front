@@ -1,1 +1,28 @@
-<p>dispatches works!</p>
+<div class="d-flex justify-content-between m-2">
+    <app-button-back></app-button-back>
+    <h2>Таблица отгрузок</h2>
+    <div style="width: 10%"></div>
+</div>
+
+<div class="container-fluid my-3 w-100">
+    <table class="table table-hover table-responsive">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Дата отгрузки</th>
+            <th scope="col">Статус</th>
+            <th scope="col">ФИО заказчика</th>
+            <th scope="col">ФИО сотрудника</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of dispatches">
+            <th scope="row">{{item.dispatch_id}}</th>
+            <td>{{item.dispatch_date}}</td>
+            <td>{{item.status_name}}</td>
+            <td>{{item.cus_surname}} {{item.cus_name}} {{item.cus_pat}}</td>
+            <td>{{item.emp_surname}} {{item.emp_name}} {{item.emp_pat}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
