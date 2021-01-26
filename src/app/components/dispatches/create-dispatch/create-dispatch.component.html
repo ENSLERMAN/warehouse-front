@@ -1,1 +1,26 @@
-<p>create-dispatch works!</p>
+<div class="d-flex justify-content-between w-100 m-2">
+    <app-button-back></app-button-back>
+    <h2>Создание отгрузки</h2>
+    <div style="width: 10%"></div>
+</div>
+
+<div class="container-fluid my-3 w-50">
+    <div class="w-100 mx-auto">
+        <h1 class="text-center">
+            Выберите дату и товары для создания отгрузки
+        </h1>
+
+        <div>
+            <form [formGroup]="dateGroup">
+                <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>Выберите дату и время отгрузки</mat-label>
+                    <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
+                    <mat-datetimepicker #datetimePicker type="datetime" openOnFocus="true" timeInterval="5"
+                                        mode="portrait"></mat-datetimepicker>
+                    <input matInput formControlName="datetimeCtrl" [matDatetimepicker]="datetimePicker"
+                           [min]="startDate" required autocomplete="false">
+                </mat-form-field>
+            </form>
+        </div>
+    </div>
+</div>

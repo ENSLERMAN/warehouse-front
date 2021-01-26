@@ -27,6 +27,15 @@ import { ButtonBackComponent } from './components/helpers/button-back/button-bac
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSelectModule } from '@angular/material/select';
+import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
+import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MAT_MOMENT_DATE_FORMATS, MatMomentDateModule,
+  MomentDateAdapter
+} from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [
@@ -59,10 +68,21 @@ import { MatSelectModule } from '@angular/material/select';
     MatTableModule,
     MatSelectModule,
     FormsModule,
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatMomentDatetimeModule,
+    MatDatetimepickerModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+    {provide: MAT_DATE_LOCALE, useValue: 'ru'},
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS}
   ],
   bootstrap: [AppComponent]
 })
