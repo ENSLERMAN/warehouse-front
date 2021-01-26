@@ -26,6 +26,14 @@ export interface Dispatch {
   cus_pat: string;
 }
 
+export interface Products {
+  product_id: number;
+  product_amount: number;
+  product_name: string;
+  product_des: string;
+  product_barcode: string;
+}
+
 @Injectable()
 export class DispatchesService {
   constructor(
@@ -63,6 +71,18 @@ export class DispatchesService {
 
   getDispathes(): Observable<HttpResponse<Dispatch[]>> {
     return this.http.get<Dispatch[]>(`${environment.baseURL}/api/dispatch/all`, {
+      observe: 'response'
+    }).pipe(
+      catchError(err => {
+        console.error(err);
+        alert(err);
+        return throwError(err);
+      })
+    );
+  }
+
+  getProductsByDispatch(disID: number): Observable<HttpResponse<Products[]>> {
+    return this.http.get<Products[]>(`${environment.baseURL}/api/dispatch/products?dis_id=${disID}`, {
       observe: 'response'
     }).pipe(
       catchError(err => {

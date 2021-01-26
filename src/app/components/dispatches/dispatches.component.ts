@@ -26,7 +26,6 @@ export class DispatchesComponent implements OnInit, OnDestroy {
     ).subscribe(v => {
       if (v.status === 200) {
         this.dispatches = v.body;
-        console.log(this.dispatches);
       }
     });
   }

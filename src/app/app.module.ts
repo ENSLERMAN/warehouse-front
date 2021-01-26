@@ -36,6 +36,7 @@ import {
   MAT_MOMENT_DATE_FORMATS, MatMomentDateModule,
   MomentDateAdapter
 } from '@angular/material-moment-adapter';
+import { CloseDispatchComponent } from './components/dispatches/close-dispatch/close-dispatch.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {
     ReportsComponent,
     CreateDispatchComponent,
     CreateShipmentComponent,
-    ButtonBackComponent
+    ButtonBackComponent,
+    CloseDispatchComponent
   ],
   imports: [
     HttpClientModule,

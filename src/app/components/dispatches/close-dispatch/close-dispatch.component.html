@@ -1,0 +1,27 @@
+<div class="container-fluid my-2">
+    <div class="d-flex justify-content-between">
+        <button mat-raised-button color="warn" routerLink="/dispatches">Вернуться назад</button>
+        <h2>Отгрузка товара заказчику</h2>
+        <div style="width: 10%"></div>
+    </div>
+    <table class="table table-hover table-responsive my-3">
+        <thead>
+        <tr>
+            <th scope="col">ID товара</th>
+            <th scope="col">Товар</th>
+            <th scope="col">Описание</th>
+            <th scope="col">Кол-во для отгрузки</th>
+            <th scope="col">Баркод</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of prods" style="cursor: pointer">
+            <th scope="row">{{item.product_id}}</th>
+            <td>{{item.product_name}}</td>
+            <td>{{item.product_des}}</td>
+            <td>{{item.product_amount}}</td>
+            <td>{{item.product_barcode}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

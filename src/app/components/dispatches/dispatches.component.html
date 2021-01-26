@@ -9,16 +9,16 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Дата отгрузки</th>
+            <th scope="col">Дата отгрузки заказчиком</th>
             <th scope="col">Статус</th>
             <th scope="col">ФИО заказчика</th>
             <th scope="col">ФИО сотрудника</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of dispatches">
+        <tr *ngFor="let item of dispatches" style="cursor: pointer" [routerLink]="['/dispatches/close/', item.dispatch_id]">
             <th scope="row">{{item.dispatch_id}}</th>
-            <td>{{item.dispatch_date}}</td>
+            <td>{{item.dispatch_date | date:'dd.MM.yyyy HH:mm:ss z':'+0300'}}</td>
             <td>{{item.status_name}}</td>
             <td>{{item.cus_surname}} {{item.cus_name}} {{item.cus_pat}}</td>
             <td>{{item.emp_surname}} {{item.emp_name}} {{item.emp_pat}}</td>
