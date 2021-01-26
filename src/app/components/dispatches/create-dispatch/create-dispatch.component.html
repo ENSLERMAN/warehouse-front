@@ -1,5 +1,5 @@
-<div class="d-flex justify-content-between w-100 m-2">
-    <app-button-back></app-button-back>
+<div class="d-flex justify-content-between w-100 my-2">
+    <app-button-back class="mx-2"></app-button-back>
     <h2>Создание отгрузки</h2>
     <div style="width: 10%"></div>
 </div>
@@ -13,7 +13,7 @@
         <div>
             <form [formGroup]="dateGroup">
                 <mat-form-field appearance="fill" class="w-100">
-                    <mat-label>Выберите дату и время отгрузки</mat-label>
+                    <mat-label>Выберите дату и время отгрузки по МСК</mat-label>
                     <mat-datetimepicker-toggle [for]="datetimePicker" matSuffix></mat-datetimepicker-toggle>
                     <mat-datetimepicker #datetimePicker type="datetime" openOnFocus="true" timeInterval="5"
                                         mode="portrait"></mat-datetimepicker>
@@ -21,6 +21,40 @@
                            [min]="startDate" required autocomplete="false">
                 </mat-form-field>
             </form>
+            <form [formGroup]="fg">
+                <mat-form-field appearance="fill" class="w-100">
+                    <mat-label>Выберите товар из списка</mat-label>
+                    <mat-select multiple formControlName="productsSelected" required>
+                        <mat-option *ngFor="let prod of prods" [value]="prod">
+                            {{prod.name}}, баркод: {{prod.barcode}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </form>
+            <ng-container *ngIf="fg.controls.productsSelected.value !== null">
+                <form [formGroup]="fgs">
+                    <div *ngFor="let item of selectedProds;" class="w-100 d-flex flex-column mb-2">
+                        <mat-form-field appearance="fill" hintLabel="Допустимое кол-во не больше кол-ва на складе">
+                            <mat-label>Введите кол-во для товара {{item.name}}</mat-label>
+                            <input type="number"
+                                   matInput
+                                   formControlName="{{item.barcode}}"
+                                   required
+                            >
+                            <mat-hint align="end">
+                                вы ввели {{fgs.controls[item.barcode].value || 0}}
+                                / {{item.old_amount}} в наличии на складе
+                            </mat-hint>
+                        </mat-form-field>
+                    </div>
+                </form>
+            </ng-container>
+            <button mat-raised-button color="primary"
+                    class="w-100"
+                    (click)="onSubmit()"
+                    [disabled]="!valid"
+            >Создать заявку на отгрузку
+            </button>
         </div>
     </div>
 </div>

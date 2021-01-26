@@ -1,7 +1,7 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { User } from '../../service/http.service';
 import { AuthGuard } from '../../auth.guard';
+import { User } from '../users/users.service';
 
 @Component({
   selector: 'app-header',

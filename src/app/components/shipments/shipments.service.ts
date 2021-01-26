@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
+import { User } from '../users/users.service';
 
 export interface Shipment {
   id: number;
@@ -21,21 +22,13 @@ export interface Shipment {
 }
 
 export interface Product {
+  old_amount?: number;
   id: number;
   name: string;
   description: string;
   amount: number;
   price: number;
   barcode: string;
-}
-
-export interface User {
-  user_id: number;
-  surname: string;
-  name: string;
-  patronymic: string;
-  login: string;
-  access_id: number;
 }
 
 @Injectable({

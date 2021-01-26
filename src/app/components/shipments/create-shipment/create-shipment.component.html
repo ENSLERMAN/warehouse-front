@@ -6,7 +6,7 @@
     </div>
     <div class="w-50 my-5 mx-auto">
         <div>
-            <form [formGroup]="fg" class="w-100 d-flex flex-column">
+            <form [formGroup]="fg" class="w-100 d-flex flex-column" (ngSubmit)="onSubmit()">
                 <h3>Выберите товар из списка, и/или добавьте новый</h3>
                 <mat-form-field appearance="fill">
                     <mat-label>Выберите товар из списка</mat-label>
@@ -18,8 +18,8 @@
                 </mat-form-field>
                 <mat-form-field appearance="fill">
                     <mat-label>Выберите поставщика</mat-label>
-                    <mat-select formControlName="suppSelected" class="w-100">
-                        <mat-option *ngFor="let item of supps" [value]="item.id">
+                    <mat-select formControlName="suppSelected" class="w-100" required>
+                        <mat-option *ngFor="let item of supps" [value]="item.user_id">
                             {{item.surname}} {{item.name}} {{item.patronymic}}
                         </mat-option>
                     </mat-select>
@@ -78,9 +78,9 @@
                 </div>
                 <div class="text-center mt-3">
                     <button mat-raised-button color="primary"
-                            [disabled]="(!fgs.valid || !dynamicForm.valid)"
+                            [disabled]="!fg.controls.suppSelected.valid"
                             type="submit"
-                    >Добавить отгрузку
+                    >Создать поставку
                     </button>
                     <button mat-raised-button color="accent" class="mx-3" (click)="onClear()" type="reset">Отчистить
                         поля

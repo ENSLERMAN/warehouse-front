@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpService, User } from '../../service/http.service';
+import { HttpService } from '../../service/http.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { User } from '../users/users.service';
 
 @Component({
   selector: 'app-login',

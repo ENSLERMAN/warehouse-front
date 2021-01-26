@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Product, ShipmentsService, User } from '../shipments.service';
+import { Product, ShipmentsService } from '../shipments.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { User } from '../../users/users.service';
 
 @Component({
   selector: 'app-create-shipment',
