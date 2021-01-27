@@ -1,1 +1,58 @@
-<p>users works!</p>
+<div class="d-flex justify-content-between m-2">
+    <app-button-back></app-button-back>
+    <h2>Пользователи системы</h2>
+    <div style="width: 10%"></div>
+</div>
+<mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Список пользователей">
+        <div class="container-fluid my-3 w-100">
+            <table class="table table-hover table-responsive">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">ФИО</th>
+                    <th scope="col">Логин</th>
+                    <th scope="col">Роль</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of users" style="cursor: pointer">
+                    <th scope="row">{{item.user_id}}</th>
+                    <td>{{item.surname}} {{item.name}} {{item.patronymic}}</td>
+                    <td>{{item.login}}</td>
+                    <td>{{item.access_name}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </mat-tab>
+    <mat-tab label="Поменять роль">
+        <div class="container-fluid mx-auto w-100 my-5">
+            <div class="mx-auto w-50">
+                <form [formGroup]="fg" (ngSubmit)="changeRole()">
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>Выберите пользователя</mat-label>
+                        <mat-select required formControlName="user">
+                            <mat-option *ngFor="let user of users"
+                                        [value]="user.user_id">{{user.surname}} {{user.name}} {{user.patronymic}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="w-100">
+                        <mat-label>Выберите роль</mat-label>
+                        <mat-select required formControlName="role">
+                            <mat-option *ngFor="let role of roles"
+                                        [value]="role.access_id">{{role.access_name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <button mat-raised-button
+                            type="submit"
+                            class="w-100 my-3"
+                            color="primary"
+                            [disabled]="!fg.valid"
+                    >Поменять роль</button>
+                </form>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>

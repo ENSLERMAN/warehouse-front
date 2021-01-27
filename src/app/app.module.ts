@@ -39,6 +39,7 @@ import {
 import { CloseDispatchComponent } from './components/dispatches/close-dispatch/close-dispatch.component';
 import { ProductsComponent } from './components/products/products.component';
 import { EditProductComponent } from './components/products/edit-product/edit-product.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { EditProductComponent } from './components/products/edit-product/edit-pr
     MatMomentDateModule,
     MatMomentDatetimeModule,
     MatDatetimepickerModule,
+    MatTabsModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true},
