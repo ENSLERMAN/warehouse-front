@@ -41,6 +41,13 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
       if (v.status === 200) {
         this.supps = v.body;
       }
+    }, error => {
+      alert(`
+          Message: ${error.message}
+          HttpStatusCode: ${error.code}
+          Error: ${error.error}
+          Description: ${error.description}
+        `);
     });
     this.http.getProducts().pipe(
       takeUntil(this.destroy$)
@@ -48,6 +55,13 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
       if (res.status === 200) {
         this.prods = res.body;
       }
+    }, error => {
+      alert(`
+          Message: ${error.message}
+          HttpStatusCode: ${error.code}
+          Error: ${error.error}
+          Description: ${error.description}
+        `);
     });
     this.fg.controls.productsSelected.valueChanges.subscribe((v: Product[]) => {
       this.selectedProds = v;
@@ -114,6 +128,13 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
       if (value.status === 204) {
         this.router.navigate(['/shipments']);
       }
+    }, error => {
+      alert(`
+          Message: ${error.message}
+          HttpStatusCode: ${error.code}
+          Error: ${error.error}
+          Description: ${error.description}
+        `);
     });
   }
 

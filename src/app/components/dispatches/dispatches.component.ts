@@ -27,6 +27,13 @@ export class DispatchesComponent implements OnInit, OnDestroy {
       if (v.status === 200) {
         this.dispatches = v.body;
       }
+    }, error => {
+      alert(`
+          Message: ${error.message}
+          HttpStatusCode: ${error.code}
+          Error: ${error.error}
+          Description: ${error.description}
+        `);
     });
   }
 

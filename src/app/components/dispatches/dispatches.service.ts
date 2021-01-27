@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Product } from '../shipments/shipments.service';
 import { environment } from '../../../environments/environment';
@@ -95,22 +95,19 @@ export class DispatchesService {
   }
 
   closeDispatch(
-    disID: string,
+    disID: any,
     employeeID: number,
     cusID: number,
     prods: productsForDispatch[]
-  ): Observable<HttpResponse<void>> {
-    return this.http.post<void>(`${environment.baseURL}/api/dispatch/close_dispatch`, {
+  ): Observable<HttpResponse<any>> {
+    return this.http.post<any>(`${environment.baseURL}/api/dispatch/close_dispatch`, {
       dispatch_id: parseInt(disID, 10),
       emp_id: employeeID,
       customer_id: cusID,
       products: prods
-    }, {
-      observe: 'response'
-    }).pipe(
+    }, {observe: 'response'}).pipe(
       catchError(err => {
         console.error(err);
-        alert(err);
         return throwError(err);
       })
     );

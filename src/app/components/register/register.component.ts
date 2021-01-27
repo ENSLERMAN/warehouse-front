@@ -47,7 +47,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this.router.navigate(['/login']);
         }
       }
-    }, error => console.log(error));
+    }, error => {
+      alert(`
+          Message: ${error.message}
+          HttpStatusCode: ${error.code}
+          Error: ${error.error}
+          Description: ${error.description}
+        `);
+    });
   }
 
   ngOnDestroy(): void {

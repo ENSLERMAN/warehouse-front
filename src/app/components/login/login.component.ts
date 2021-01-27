@@ -53,8 +53,14 @@ export class LoginComponent implements OnInit, OnDestroy {
           return true;
         }
       }
-    }, () => {
+    }, error => {
       this.error = true;
+      alert(`
+          Message: ${error.message}
+          HttpStatusCode: ${error.code}
+          Error: ${error.error}
+          Description: ${error.description}
+        `);
     });
     return false;
   }

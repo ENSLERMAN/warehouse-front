@@ -53,7 +53,6 @@ export class ShipmentsService {
       }),
       catchError(err => {
         console.error(err);
-        alert(err);
         return throwError(err);
       })
     );
@@ -69,7 +68,6 @@ export class ShipmentsService {
     }).pipe(
       catchError(err => {
         console.error(err);
-        alert(err);
         return throwError(err);
       })
     );
@@ -80,8 +78,8 @@ export class ShipmentsService {
       observe: 'response'
     }).pipe(
       catchError(err => {
-        alert(err);
-        return ([]);
+        console.error(err);
+        return throwError(err);
       })
     );
   }
@@ -92,7 +90,6 @@ export class ShipmentsService {
     }).pipe(
       catchError(err => {
         console.error(err);
-        alert(err);
         return throwError(err);
       })
     );

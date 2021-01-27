@@ -9,6 +9,13 @@ import { Observable, throwError } from 'rxjs';
 import { AuthService } from '../service/auth.service';
 import { catchError } from 'rxjs/operators';
 
+export interface ErrorFromServer {
+  message: string;
+  code: number;
+  error: string;
+  description: string;
+}
+
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(private auth: AuthService) {
@@ -19,8 +26,13 @@ export class ErrorInterceptor implements HttpInterceptor {
       if (err.status === 401) {
         this.auth.logout();
       }
-      const error = err.error.message || err.statusText;
-      return throwError(error);
+      const errorJSON: ErrorFromServer = {
+        message: err.message,
+        code: err.error.code,
+        error: err.error.error,
+        description: err.error.description
+      };
+      return throwError(errorJSON);
     }));
   }
 }

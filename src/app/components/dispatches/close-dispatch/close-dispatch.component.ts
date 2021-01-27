@@ -39,6 +39,13 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
         this.prods = v.body;
         this.cusID = this.prods[0].cus_id;
       }
+    }, error => {
+      alert(`
+          Message: ${error.message}
+          HttpStatusCode: ${error.code}
+          Error: ${error.error}
+          Description: ${error.description}
+        `);
     });
   }
 
@@ -61,9 +68,17 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
       this.http.closeDispatch(this.disID, emp.user_id, this.cusID, this.prodsForDispatch).pipe(
         takeUntil(this.destroy$)
       ).subscribe(v => {
+        console.log(v);
         if (v.status === 204) {
           this.router.navigate(['/dispatches']);
         }
+      }, error => {
+        alert(`
+          Message: ${error.message}
+          HttpStatusCode: ${error.code}
+          Error: ${error.error}
+          Description: ${error.description}
+        `);
       });
       return true;
     } else if (this.prodsForDispatch === []) {

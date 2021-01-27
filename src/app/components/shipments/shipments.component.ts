@@ -29,7 +29,14 @@ export class ShipmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     ).subscribe(res => {
       this.source.data = res.body;
       this.source.sort = this.sort;
-    }, err => alert(err));
+    }, error => {
+      alert(`
+          Message: ${error.message}
+          HttpStatusCode: ${error.code}
+          Error: ${error.error}
+          Description: ${error.description}
+        `);
+    });
   }
 
   ngOnDestroy(): void {

@@ -81,6 +81,13 @@ export class CreateDispatchComponent implements OnInit, OnDestroy {
       }
       this.valid = true;
       this.selectedProdsForDispatch = prods;
+    }, error => {
+      alert(`
+          Message: ${error.message}
+          HttpStatusCode: ${error.code}
+          Error: ${error.error}
+          Description: ${error.description}
+        `);
     });
   }
 
@@ -91,6 +98,13 @@ export class CreateDispatchComponent implements OnInit, OnDestroy {
       if (value.status === 204) {
         this.router.navigate(['/dispatches']);
       }
+    }, error => {
+      alert(`
+          Message: ${error.message}
+          HttpStatusCode: ${error.code}
+          Error: ${error.error}
+          Description: ${error.description}
+        `);
     });
   }
 
@@ -102,6 +116,13 @@ export class CreateDispatchComponent implements OnInit, OnDestroy {
           value.old_amount = value.amount;
         });
       }
+    }, error => {
+      alert(`
+          Message: ${error.message}
+          HttpStatusCode: ${error.code}
+          Error: ${error.error}
+          Description: ${error.description}
+        `);
     });
   }
 
