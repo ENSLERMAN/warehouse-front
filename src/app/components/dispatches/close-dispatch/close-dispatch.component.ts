@@ -30,6 +30,7 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
   cusID: number;
   prods: Products[] = [];
   prodsForDispatch: productsForDispatch[] = [];
+  errFromDB: boolean;
 
   ngOnInit(): void {
     this.http.getProductsByDispatch(this.disID).pipe(
@@ -68,11 +69,11 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
       this.http.closeDispatch(this.disID, emp.user_id, this.cusID, this.prodsForDispatch).pipe(
         takeUntil(this.destroy$)
       ).subscribe(v => {
-        console.log(v);
         if (v.status === 204) {
           this.router.navigate(['/dispatches']);
         }
       }, error => {
+        this.errFromDB = true;
         alert(`
           Message: ${error.message}
           HttpStatusCode: ${error.code}
@@ -85,6 +86,25 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
       alert('Нет товаров к отгрузке');
       return false;
     }
+  }
+
+  refuseDispatch(): void {
+    const emp = JSON.parse(localStorage.getItem('user'));
+    this.http.refuseDispatch(emp.user_id, this.cusID, this.disID).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(v => {
+      if (v.status === 204) {
+        this.router.navigate(['/dispatches']);
+      }
+    }, error => {
+      this.errFromDB = true;
+      alert(`
+          Message: ${error.message}
+          HttpStatusCode: ${error.code}
+          Error: ${error.error}
+          Description: ${error.description}
+        `);
+    });
   }
 
   printPDF(): void {

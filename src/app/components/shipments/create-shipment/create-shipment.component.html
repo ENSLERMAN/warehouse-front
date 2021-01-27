@@ -19,7 +19,7 @@
                 <mat-form-field appearance="fill">
                     <mat-label>Выберите поставщика</mat-label>
                     <mat-select formControlName="suppSelected" class="w-100" required>
-                        <mat-option *ngFor="let item of supps" [value]="item.user_id">
+                        <mat-option *ngFor="let item of supps" [value]="item">
                             {{item.surname}} {{item.name}} {{item.patronymic}}
                         </mat-option>
                     </mat-select>

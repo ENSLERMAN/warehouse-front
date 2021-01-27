@@ -121,10 +121,10 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
       return;
     }
     const prods: Product[] = this.selectedProdsForShip.concat(this.dynamicForm.value?.tickets);
-    const suppID: number = this.fg.controls.suppSelected.value;
+    const suppID: User = this.fg.controls.suppSelected.value;
     this.emp = JSON.parse(localStorage.getItem('user'));
-    console.log(this.emp);
-    this.http.makeShipment(suppID, this.emp.user_id, prods).subscribe(value => {
+    // @ts-ignore
+    this.http.makeShipment(suppID.id, this.emp.user_id, prods).subscribe(value => {
       if (value.status === 204) {
         this.router.navigate(['/shipments']);
       }

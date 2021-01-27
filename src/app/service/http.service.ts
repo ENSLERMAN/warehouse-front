@@ -31,7 +31,6 @@ export class HttpService {
       }).pipe(
       catchError(err => {
         console.error(err);
-        alert(err);
         return throwError(err);
       })
     );
@@ -50,7 +49,6 @@ export class HttpService {
       }).pipe(
       catchError(err => {
         console.error(err);
-        alert(err);
         return throwError(err);
       })
     );

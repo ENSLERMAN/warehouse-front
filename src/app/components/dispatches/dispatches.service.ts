@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Product } from '../shipments/shipments.service';
 import { environment } from '../../../environments/environment';
@@ -48,7 +48,6 @@ export class DispatchesService {
     }).pipe(
       catchError(err => {
         console.error(err);
-        alert(err);
         return throwError(err);
       })
     );
@@ -64,7 +63,6 @@ export class DispatchesService {
     }).pipe(
       catchError(err => {
         console.error(err);
-        alert(err);
         return throwError(err);
       })
     );
@@ -76,7 +74,6 @@ export class DispatchesService {
     }).pipe(
       catchError(err => {
         console.error(err);
-        alert(err);
         return throwError(err);
       })
     );
@@ -88,7 +85,6 @@ export class DispatchesService {
     }).pipe(
       catchError(err => {
         console.error(err);
-        alert(err);
         return throwError(err);
       })
     );
@@ -99,13 +95,32 @@ export class DispatchesService {
     employeeID: number,
     cusID: number,
     prods: productsForDispatch[]
-  ): Observable<HttpResponse<any>> {
-    return this.http.post<any>(`${environment.baseURL}/api/dispatch/close_dispatch`, {
+  ): Observable<HttpResponse<void>> {
+    return this.http.post<void>(`${environment.baseURL}/api/dispatch/close_dispatch`, {
       dispatch_id: parseInt(disID, 10),
       emp_id: employeeID,
       customer_id: cusID,
       products: prods
     }, {observe: 'response'}).pipe(
+      catchError(err => {
+        console.error(err);
+        return throwError(err);
+      })
+    );
+  }
+
+  refuseDispatch(
+    employee: number,
+    customer: number,
+    dispatch: any
+  ): Observable<HttpResponse<void>> {
+    return this.http.post<void>(`${environment.baseURL}/api/dispatch/refuse`, {
+      emp_id: employee,
+      cus_id: customer,
+      dis_id: parseInt(dispatch, 10),
+    }, {
+      observe: 'response'
+    }).pipe(
       catchError(err => {
         console.error(err);
         return throwError(err);

@@ -1,16 +1,24 @@
 <div class="container-fluid my-2">
     <div class="d-flex justify-content-between">
         <button mat-raised-button color="warn" routerLink="/dispatches">Вернуться назад</button>
-        <button mat-raised-button
-                color="primary"
-                (click)="closeDispatch()"
-            >ВСЕ ТОВАРЫ ОТГРУЖЕНЫ ЗАКАЗЧИКУ
-        </button>
+        <div>
+            <button mat-raised-button
+                    color="primary"
+                    (click)="closeDispatch()"
+                    class="mx-2"
+            >ОТГРУЗИТЬ ТОВАРЫ ЗАКАЗЧИКУ
+            </button>
+            <button mat-raised-button
+                    color="warn"
+                    (click)="refuseDispatch()"
+                    [disabled]="!errFromDB"
+            >ОТКЛОНИТЬ ОТГРУЗКУ
+            </button>
+        </div>
         <button mat-stroked-button
                 color="accent"
                 (click)="printPDF()"
-        >
-            ПЕЧАТЬ В PDF
+        >ПЕЧАТЬ В PDF
         </button>
     </div>
     <div #pdfTable class="my-3">
