@@ -1,0 +1,30 @@
+<div class="d-flex justify-content-between m-2">
+    <app-button-back></app-button-back>
+    <h2>Таблица товаров</h2>
+    <div style="width: 10%"></div>
+</div>
+
+<div class="container-fluid my-3 w-100">
+    <table class="table table-hover table-responsive">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Наименование</th>
+            <th scope="col">Описание</th>
+            <th scope="col">Кол-во в наличии</th>
+            <th scope="col">Цена за шт.</th>
+            <th scope="col">Баркод</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of prods" style="cursor: pointer" [routerLink]="['/products/', item.id]">
+            <th scope="row">{{item.id}}</th>
+            <td>{{item.name}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.amount}}</td>
+            <td>{{item.price}}</td>
+            <td>{{item.barcode}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

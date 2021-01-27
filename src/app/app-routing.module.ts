@@ -11,6 +11,8 @@ import { ReportsComponent } from './components/reports/reports.component';
 import { CreateDispatchComponent } from './components/dispatches/create-dispatch/create-dispatch.component';
 import { CreateShipmentComponent } from './components/shipments/create-shipment/create-shipment.component';
 import { CloseDispatchComponent } from './components/dispatches/close-dispatch/close-dispatch.component';
+import { ProductsComponent } from './components/products/products.component';
+import { EditProductComponent } from './components/products/edit-product/edit-product.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'main', pathMatch: 'full'},
@@ -22,6 +24,8 @@ const routes: Routes = [
   {path: 'dispatches/create_dispatch', component: CreateDispatchComponent, canActivate: [AuthGuard]},
   {path: 'users', component: UsersComponent, canActivate: [AuthGuard]},
   {path: 'reports', component: ReportsComponent, canActivate: [AuthGuard]},
+  {path: 'products', component: ProductsComponent, canActivate: [AuthGuard]},
+  {path: 'products/:id', component: EditProductComponent, canActivate: [AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
 ];

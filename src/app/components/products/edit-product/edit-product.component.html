@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-between m-2">
+    <button mat-raised-button
+            color="warn"
+            [routerLink]="['/products']"
+    >Вернуться назад
+    </button>
+    <h2>Редактирование товара</h2>
+    <div style="width: 10%"></div>
+</div>
+
+<div class="container-fluid my-5 w-50 mx-auto">
+    <form [formGroup]="fg" (ngSubmit)="onSave()">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Наименование</mat-label>
+            <input matInput formControlName="name" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Описание</mat-label>
+            <input matInput formControlName="description" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Кол-во товара ( только чтение )</mat-label>
+            <input matInput formControlName="amount" required readonly>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Цена за шт.</mat-label>
+            <input matInput formControlName="price" required>
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Баркод товара ( только чтение )</mat-label>
+            <input matInput formControlName="barcode" required readonly>
+        </mat-form-field>
+        <div class="d-flex w-100">
+            <button mat-raised-button
+                    color="primary"
+                    type="submit"
+                    class="w-50 mx-1"
+            >Сохранить
+            </button>
+            <button mat-raised-button
+                    color="warn"
+                    type="button"
+                    class="w-50 mx-1"
+                    (click)="onDelete()"
+            >Удалить товар
+            </button>
+        </div>
+    </form>
+</div>
