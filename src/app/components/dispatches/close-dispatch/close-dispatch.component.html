@@ -1,6 +1,11 @@
 <div class="container-fluid my-2">
     <div class="d-flex justify-content-between">
         <button mat-raised-button color="warn" routerLink="/dispatches">Вернуться назад</button>
+        <button mat-raised-button
+                color="primary"
+                (click)="closeDispatch()"
+            >ВСЕ ТОВАРЫ ОТГРУЖЕНЫ ЗАКАЗЧИКУ
+        </button>
         <button mat-stroked-button
                 color="accent"
                 (click)="printPDF()"

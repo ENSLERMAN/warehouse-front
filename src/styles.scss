@@ -14,3 +14,7 @@ $theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 
 @include angular-material-theme($theme);
 @include mat-datetimepicker-theme($theme);
+
+button {
+  outline: none !important;
+}

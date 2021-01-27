@@ -87,7 +87,6 @@ export class CreateDispatchComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     const prods: Product[] = this.selectedProdsForDispatch;
     this.emp = JSON.parse(localStorage.getItem('user'));
-    console.log(this.emp);
     this.http.makeDispatch(this.emp.user_id, this.selectedDate, prods).subscribe(value => {
       if (value.status === 204) {
         this.router.navigate(['/dispatches']);

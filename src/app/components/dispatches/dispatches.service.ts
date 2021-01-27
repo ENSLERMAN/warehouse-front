@@ -6,7 +6,7 @@ import { Product } from '../shipments/shipments.service';
 import { environment } from '../../../environments/environment';
 
 // tslint:disable-next-line:class-name
-interface productsForDispatch {
+export interface productsForDispatch {
   barcode: string;
   amount: number;
 }
@@ -27,6 +27,7 @@ export interface Dispatch {
 }
 
 export interface Products {
+  cus_id: number;
   product_id: number;
   product_amount: number;
   product_name: string;
@@ -83,6 +84,28 @@ export class DispatchesService {
 
   getProductsByDispatch(disID: number): Observable<HttpResponse<Products[]>> {
     return this.http.get<Products[]>(`${environment.baseURL}/api/dispatch/products?dis_id=${disID}`, {
+      observe: 'response'
+    }).pipe(
+      catchError(err => {
+        console.error(err);
+        alert(err);
+        return throwError(err);
+      })
+    );
+  }
+
+  closeDispatch(
+    disID: string,
+    employeeID: number,
+    cusID: number,
+    prods: productsForDispatch[]
+  ): Observable<HttpResponse<void>> {
+    return this.http.post<void>(`${environment.baseURL}/api/dispatch/close_dispatch`, {
+      dispatch_id: parseInt(disID, 10),
+      emp_id: employeeID,
+      customer_id: cusID,
+      products: prods
+    }, {
       observe: 'response'
     }).pipe(
       catchError(err => {

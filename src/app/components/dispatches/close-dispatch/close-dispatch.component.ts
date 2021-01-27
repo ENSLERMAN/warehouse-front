@@ -1,10 +1,10 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { DispatchesService, Products } from '../dispatches.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DispatchesService, Products, productsForDispatch } from '../dispatches.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import jsPDF from 'jspdf';
-import html2canvas from "html2canvas";
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-close-dispatch',
@@ -17,7 +17,8 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
 
   constructor(
     private activatedRouter: ActivatedRoute,
-    private http: DispatchesService
+    private http: DispatchesService,
+    private router: Router
   ) {
     this.activatedRouter.params.subscribe(param => {
       this.disID = param.id;
@@ -26,7 +27,9 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
   disID: number;
+  cusID: number;
   prods: Products[] = [];
+  prodsForDispatch: productsForDispatch[] = [];
 
   ngOnInit(): void {
     this.http.getProductsByDispatch(this.disID).pipe(
@@ -34,8 +37,39 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
     ).subscribe(v => {
       if (v.status === 200) {
         this.prods = v.body;
+        this.cusID = this.prods[0].cus_id;
       }
     });
+  }
+
+  closeDispatch(): boolean {
+    this.prods.forEach(v => {
+      let barcode: string;
+      do {
+        barcode = prompt(`Введите баркод для товара ${v.product_name}`);
+        if (barcode === null) {
+          return;
+        }
+      } while (barcode !== v.product_barcode);
+      this.prodsForDispatch.push({
+        barcode,
+        amount: v.product_amount
+      });
+    });
+    if (this.prodsForDispatch !== []) {
+      const emp = JSON.parse(localStorage.getItem('user'));
+      this.http.closeDispatch(this.disID, emp.user_id, this.cusID, this.prodsForDispatch).pipe(
+        takeUntil(this.destroy$)
+      ).subscribe(v => {
+        if (v.status === 204) {
+          this.router.navigate(['/dispatches']);
+        }
+      });
+      return true;
+    } else if (this.prodsForDispatch === []) {
+      alert('Нет товаров к отгрузке');
+      return false;
+    }
   }
 
   printPDF(): void {

@@ -2,9 +2,9 @@
     <mat-toolbar-row>
         <div class="container-fluid">
             <div class="d-flex">
-                <div class="me-auto">
-                    <span [routerLink]="['/main']" class="nav-link" style="cursor: pointer">Wildbananas</span>
-                </div>
+                <button mat-button [routerLink]="['/main']" class="me-auto" style="cursor: pointer; font-size: 1em">
+                    Wildbananas
+                </button>
                 <div [style.display]="visibility==true?'block-inline':'none'" class="px-3 my-auto">
                     <h5>{{user?.access_name}}: {{user?.surname}} {{user?.name}} {{user?.patronymic}}</h5>
                 </div>
