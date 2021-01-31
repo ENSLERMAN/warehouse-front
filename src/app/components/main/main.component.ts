@@ -27,13 +27,6 @@ export class MainComponent implements OnInit {
       pic: '/assets/images/dispatches.jpg'
     },
     {
-      link: '/reports',
-      access: 3,
-      name: 'Отчёты',
-      des: 'Посмотреть отчёты или запросить новый',
-      pic: `/assets/images/reports.jpg`
-    },
-    {
       link: '/products',
       access: 3,
       name: 'Товары',

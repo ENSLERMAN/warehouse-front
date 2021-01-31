@@ -79,6 +79,17 @@ export class DispatchesService {
     );
   }
 
+  getDispathesHistory(): Observable<HttpResponse<Dispatch[]>> {
+    return this.http.get<Dispatch[]>(`${environment.baseURL}/api/dispatch/history`, {
+      observe: 'response'
+    }).pipe(
+      catchError(err => {
+        console.error(err);
+        return throwError(err);
+      })
+    );
+  }
+
   getProductsByDispatch(disID: number): Observable<HttpResponse<Products[]>> {
     return this.http.get<Products[]>(`${environment.baseURL}/api/dispatch/products?dis_id=${disID}`, {
       observe: 'response'

@@ -49,7 +49,9 @@ export class LoginComponent implements OnInit, OnDestroy {
           localStorage.setItem('user', JSON.stringify(this.user));
           const userFIO = window.btoa(this.loginForm.value.login + ':' + this.loginForm.value.pass);
           localStorage.setItem('currentUser', userFIO);
-          this.router.navigate(['/main']);
+          this.router.navigate(['/main']).finally(() => {
+            location.reload(true);
+          });
           return true;
         }
       }

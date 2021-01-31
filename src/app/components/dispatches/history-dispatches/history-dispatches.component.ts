@@ -1,32 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Dispatch, DispatchesService } from './dispatches.service';
-import { takeUntil } from 'rxjs/operators';
+import { Dispatch, DispatchesService } from '../dispatches.service';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-dispatches',
-  templateUrl: './dispatches.component.html',
-  styleUrls: ['./dispatches.component.scss'],
+  selector: 'app-history-dispatches',
+  templateUrl: './history-dispatches.component.html',
+  styleUrls: ['./history-dispatches.component.scss'],
   providers: [
     DispatchesService
-  ],
-  styles: [
-    `
-        .back_color1 {
-            background-color: #e6efff;
-        }
-
-        .back_color2 {
-            background-color: #d3ffdb;
-        }
-
-        .back_color3 {
-            background-color: #ffe6e6;
-        }
-    `
   ]
 })
-export class DispatchesComponent implements OnInit, OnDestroy {
+export class HistoryDispatchesComponent implements OnInit, OnDestroy {
   constructor(
     private http: DispatchesService
   ) {
@@ -36,7 +21,7 @@ export class DispatchesComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   ngOnInit(): void {
-    this.http.getDispathes().pipe(
+    this.http.getDispathesHistory().pipe(
       takeUntil(this.destroy$)
     ).subscribe(v => {
       if (v.status === 200) {

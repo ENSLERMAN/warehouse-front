@@ -1,11 +1,8 @@
 <div class="container-fluid my-3">
     <div class="d-flex justify-content-between">
-        <app-button-back></app-button-back>
-        <h1>Поставки</h1>
-        <mat-button-toggle-group>
-            <mat-button-toggle routerLink="/shipments/history">История поставок</mat-button-toggle>
-            <mat-button-toggle routerLink="/shipments/create_shipment">Создать новую поставку</mat-button-toggle>
-        </mat-button-toggle-group>
+        <button mat-raised-button [routerLink]="['/shipments']" color="warn">Назад</button>
+        <h1>История поставок</h1>
+        <div style="width: 10%"></div>
     </div>
     <div class="mt-3">
         <table mat-table [dataSource]="source" matSort class="mat-elevation-z8 w-100">

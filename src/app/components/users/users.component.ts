@@ -67,7 +67,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe(v => {
       if (v.status === 204) {
-        this.router.navigate(['/main']);
+        location.reload(true);
       }
     }, error => {
       alert(`

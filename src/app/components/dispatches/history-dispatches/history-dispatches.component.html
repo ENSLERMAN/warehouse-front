@@ -1,25 +1,22 @@
 <div class="d-flex justify-content-between m-2">
-    <app-button-back></app-button-back>
-    <h2>Таблица отгрузок</h2>
-    <button mat-raised-button [routerLink]="['/dispatches/history']">История отгрузок</button>
+    <button mat-raised-button [routerLink]="['/dispatches']" color="warn">Назад</button>
+    <h2>Таблица истории отгрузок</h2>
+    <div style="width: 10%"></div>
 </div>
 
 <div class="container-fluid my-3 w-100">
     <table class="table table-hover table-responsive">
         <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col">Дата отгрузки заказчиком</th>
+            <th scope="col">ID отгрузки</th>
+            <th scope="col">Дата</th>
             <th scope="col">Статус</th>
             <th scope="col">ФИО заказчика</th>
             <th scope="col">ФИО сотрудника</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of dispatches" style="cursor: pointer"
-            [routerLink]="['/dispatches/close/', item.dispatch_id]"
-            [ngClass]="{back_color1:item.status_id===1, back_color2:item.status_id===2, back_color3:item.status_id===3}"
-        >
+        <tr *ngFor="let item of dispatches" style="cursor: pointer">
             <th scope="row">{{item.dispatch_id}}</th>
             <td>{{item.dispatch_date | date:'dd.MM.yyyy HH:mm:ss z':'+0300'}}</td>
             <td>{{item.status_name}}</td>

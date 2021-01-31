@@ -13,13 +13,17 @@ import { CreateShipmentComponent } from './components/shipments/create-shipment/
 import { CloseDispatchComponent } from './components/dispatches/close-dispatch/close-dispatch.component';
 import { ProductsComponent } from './components/products/products.component';
 import { EditProductComponent } from './components/products/edit-product/edit-product.component';
+import { HistoryDispatchesComponent } from './components/dispatches/history-dispatches/history-dispatches.component';
+import { HistoryShipmentComponent } from './components/shipments/history-shipment/history-shipment.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'main', pathMatch: 'full'},
   {path: 'main', component: MainComponent, canActivate: [AuthGuard]},
   {path: 'shipments', component: ShipmentsComponent, canActivate: [AuthGuard]},
+  {path: 'shipments/history', component: HistoryShipmentComponent, canActivate: [AuthGuard]},
   {path: 'shipments/create_shipment', component: CreateShipmentComponent, canActivate: [AuthGuard]},
   {path: 'dispatches', component: DispatchesComponent, canActivate: [AuthGuard]},
+  {path: 'dispatches/history', component: HistoryDispatchesComponent, canActivate: [AuthGuard]},
   {path: 'dispatches/close/:id', component: CloseDispatchComponent, canActivate: [AuthGuard]},
   {path: 'dispatches/create_dispatch', component: CreateDispatchComponent, canActivate: [AuthGuard]},
   {path: 'users', component: UsersComponent, canActivate: [AuthGuard]},

@@ -58,6 +58,24 @@ export class ShipmentsService {
     );
   }
 
+  getShipmentsHistory(): Observable<HttpResponse<Shipment[]>> {
+    return this.http.get<Shipment[]>(`${this.baseURL}/api/shipments/history`, {
+      observe: 'response'
+    }).pipe(
+      map(res => {
+        res.body.forEach((v) => {
+          v.supplier_fio = `${v.supplier_surname} ${v.supplier_name} ${v.supplier_pat}`;
+          v.employee_fio = `${v.employee_surname} ${v.employee_name} ${v.employee_pat}`;
+        });
+        return res;
+      }),
+      catchError(err => {
+        console.error(err);
+        return throwError(err);
+      })
+    );
+  }
+
   makeShipment(supID: number, empID: number, prods: Product[]): Observable<HttpResponse<void>> {
     return this.http.post<void>(`${this.baseURL}/api/shipments/new_shipment`, {
       supplier_id: supID,

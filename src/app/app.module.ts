@@ -40,6 +40,9 @@ import { CloseDispatchComponent } from './components/dispatches/close-dispatch/c
 import { ProductsComponent } from './components/products/products.component';
 import { EditProductComponent } from './components/products/edit-product/edit-product.component';
 import { MatTabsModule } from '@angular/material/tabs';
+import { HistoryDispatchesComponent } from './components/dispatches/history-dispatches/history-dispatches.component';
+import { HistoryShipmentComponent } from './components/shipments/history-shipment/history-shipment.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,9 @@ import { MatTabsModule } from '@angular/material/tabs';
     ButtonBackComponent,
     CloseDispatchComponent,
     ProductsComponent,
-    EditProductComponent
+    EditProductComponent,
+    HistoryDispatchesComponent,
+    HistoryShipmentComponent
   ],
   imports: [
     HttpClientModule,
@@ -80,6 +85,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MatMomentDatetimeModule,
     MatDatetimepickerModule,
     MatTabsModule,
+    MatButtonToggleModule,
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true},

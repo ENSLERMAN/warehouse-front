@@ -64,7 +64,7 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
         amount: v.product_amount
       });
     });
-    if (this.prodsForDispatch !== []) {
+    if (this.prodsForDispatch.length !== 0 && this.prods.length === this.prodsForDispatch.length) {
       const emp = JSON.parse(localStorage.getItem('user'));
       this.http.closeDispatch(this.disID, emp.user_id, this.cusID, this.prodsForDispatch).pipe(
         takeUntil(this.destroy$)
@@ -82,8 +82,8 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
         `);
       });
       return true;
-    } else if (this.prodsForDispatch === []) {
-      alert('Нет товаров к отгрузке');
+    } else {
+      alert('Введённые данные неверны');
       return false;
     }
   }
