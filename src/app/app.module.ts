@@ -46,6 +46,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ToastrModule } from 'ngx-toastr';
 import { HistoryProductComponent } from './components/products/history-product/history-product.component';
 import { LoadingComponent } from './components/helpers/loading/loading.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -91,6 +92,7 @@ import { LoadingComponent } from './components/helpers/loading/loading.component
     MatDatetimepickerModule,
     MatTabsModule,
     MatButtonToggleModule,
+    MatProgressSpinnerModule,
     ToastrModule.forRoot({
       timeOut: 10000,
       positionClass: 'toast-bottom-right'
