@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { User } from '../../users/users.service';
+import { InformerService } from '../../../service/informer.service';
 
 @Component({
   selector: 'app-create-shipment',
@@ -15,7 +16,8 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
   constructor(
     private http: ShipmentsService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private informer: InformerService,
   ) {
     this.fg = new FormGroup({
       productsSelected: new FormControl(null),
@@ -42,12 +44,7 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
         this.supps = v.body;
       }
     }, error => {
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
     this.http.getProducts().pipe(
       takeUntil(this.destroy$)
@@ -56,12 +53,7 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
         this.prods = res.body;
       }
     }, error => {
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
     this.fg.controls.productsSelected.valueChanges.subscribe((v: Product[]) => {
       this.selectedProds = v;
@@ -126,15 +118,11 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
     // @ts-ignore
     this.http.makeShipment(suppID.id, this.emp.user_id, prods).subscribe(value => {
       if (value.status === 204) {
+        this.informer.success('Поставка создана! Пожалуйста отгрузите прибывшие товары на склад.');
         this.router.navigate(['/shipments']);
       }
     }, error => {
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
   }
 

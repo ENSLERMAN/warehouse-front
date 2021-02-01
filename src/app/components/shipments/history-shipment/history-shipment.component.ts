@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { takeUntil } from 'rxjs/operators';
+import { InformerService } from '../../../service/informer.service';
 
 @Component({
   selector: 'app-history-shipment',
@@ -11,7 +12,7 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./history-shipment.component.scss']
 })
 export class HistoryShipmentComponent implements OnInit, OnDestroy, AfterViewInit {
-  constructor(private http: ShipmentsService) {
+  constructor(private http: ShipmentsService, private informer: InformerService,) {
   }
 
   displayedColumns: string[] = ['ship', 'fio-sup', 'fio-emp', 'date', 'barcode', 'amount'];
@@ -30,12 +31,7 @@ export class HistoryShipmentComponent implements OnInit, OnDestroy, AfterViewIni
       this.source.data = res.body;
       this.source.sort = this.sort;
     }, error => {
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
   }
 

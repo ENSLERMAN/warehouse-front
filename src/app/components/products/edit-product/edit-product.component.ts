@@ -5,6 +5,7 @@ import { Product } from '../../shipments/shipments.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { InformerService } from "../../../service/informer.service";
 
 @Component({
   selector: 'app-edit-product',
@@ -16,7 +17,8 @@ export class EditProductComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRouter: ActivatedRoute,
     private http: ProductsService,
-    private router: Router
+    private router: Router,
+    private informer: InformerService,
   ) {
     this.activatedRouter.params.subscribe(param => {
       this.prodID = param.id;
@@ -49,12 +51,7 @@ export class EditProductComponent implements OnInit, OnDestroy {
         });
       }
     }, error => {
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
   }
 
@@ -73,12 +70,7 @@ export class EditProductComponent implements OnInit, OnDestroy {
           this.router.navigate(['/products']);
         }
       }, error => {
-        alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+        this.informer.error(error);
       });
     }
   }
@@ -93,12 +85,7 @@ export class EditProductComponent implements OnInit, OnDestroy {
           this.router.navigate(['/products']);
         }
       }, error => {
-        alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+        this.informer.error(error);
       });
     }
   }

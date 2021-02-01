@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angul
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { User } from '../components/users/users.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,14 @@ export class HttpService {
     observe: 'response' as 'body',
     withCredentials: true
   };
-  private baseURL = 'http://backend.enslerman.ru:8060';
 
   constructor(private http: HttpClient) {
   }
 
   login(user: string, pass: string): Observable<HttpResponse<User> | HttpErrorResponse> {
-    return this.http.post<User>(`${this.baseURL}/auth/login`, {
-        login: user,
-        password: pass
+    return this.http.post<User>(`${environment.baseURL}/auth/login`, {
+        login: user.trim(),
+        password: pass.trim()
       },
       {
         observe: 'response'
@@ -37,12 +37,12 @@ export class HttpService {
   }
 
   register(user: string, pass: string, nam: string, surnam: string, pat: string): Observable<HttpResponse<void>> {
-    return this.http.post<void>(`${this.baseURL}/auth/register`, {
-        login: user,
-        surname: surnam,
-        name: nam,
-        patronymic: pat,
-        password: pass
+    return this.http.post<void>(`${environment.baseURL}/auth/register`, {
+        login: user.trim(),
+        surname: surnam.trim(),
+        name: nam.trim(),
+        patronymic: pat.trim(),
+        password: pass.trim()
       },
       {
         observe: 'response'

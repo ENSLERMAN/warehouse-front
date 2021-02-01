@@ -6,6 +6,7 @@
                     color="primary"
                     (click)="closeDispatch()"
                     class="mx-2"
+                    [disabled]="(user.access_id !== 3) && (user.access_id !== 1)"
             >ОТГРУЗИТЬ ТОВАРЫ ЗАКАЗЧИКУ
             </button>
             <button mat-raised-button

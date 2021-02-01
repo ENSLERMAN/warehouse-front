@@ -3,6 +3,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { User } from '../users/users.service';
+import { environment } from '../../../environments/environment';
 
 export interface Shipment {
   id: number;
@@ -35,13 +36,12 @@ export interface Product {
   providedIn: 'root'
 })
 export class ShipmentsService {
-  private baseURL = 'http://backend.enslerman.ru:8060';
 
   constructor(private http: HttpClient) {
   }
 
   getShipments(): Observable<HttpResponse<Shipment[]>> {
-    return this.http.get<Shipment[]>(`${this.baseURL}/api/shipments/all`, {
+    return this.http.get<Shipment[]>(`${environment.baseURL}/api/shipments/all`, {
       observe: 'response'
     }).pipe(
       map(res => {
@@ -59,7 +59,7 @@ export class ShipmentsService {
   }
 
   getShipmentsHistory(): Observable<HttpResponse<Shipment[]>> {
-    return this.http.get<Shipment[]>(`${this.baseURL}/api/shipments/history`, {
+    return this.http.get<Shipment[]>(`${environment.baseURL}/api/shipments/history`, {
       observe: 'response'
     }).pipe(
       map(res => {
@@ -77,7 +77,7 @@ export class ShipmentsService {
   }
 
   makeShipment(supID: number, empID: number, prods: Product[]): Observable<HttpResponse<void>> {
-    return this.http.post<void>(`${this.baseURL}/api/shipments/new_shipment`, {
+    return this.http.post<void>(`${environment.baseURL}/api/shipments/new_shipment`, {
       supplier_id: supID,
       emp_id: empID,
       products: prods
@@ -92,7 +92,7 @@ export class ShipmentsService {
   }
 
   getProducts(): Observable<HttpResponse<Product[]>> {
-    return this.http.get<Product[]>(`${this.baseURL}/api/products/get`, {
+    return this.http.get<Product[]>(`${environment.baseURL}/api/products/get`, {
       observe: 'response'
     }).pipe(
       catchError(err => {
@@ -103,7 +103,7 @@ export class ShipmentsService {
   }
 
   getSuppliers(): Observable<HttpResponse<User[]>> {
-    return this.http.get<User[]>(`${this.baseURL}/api/user/users?access_id=4`, {
+    return this.http.get<User[]>(`${environment.baseURL}/api/user/users?access_id=4`, {
       observe: 'response',
     }).pipe(
       catchError(err => {

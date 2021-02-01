@@ -40,8 +40,8 @@ export class ProductsService {
   ): Observable<HttpResponse<void>> {
     return this.http.post<void>(`${environment.baseURL}/api/products/update`, {
       id,
-      name,
-      desc,
+      name: name.trim(),
+      desc: desc.trim(),
       price
     }, {
       observe: 'response'

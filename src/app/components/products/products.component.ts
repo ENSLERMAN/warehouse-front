@@ -3,6 +3,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ProductsService } from './products.service';
 import { Product } from '../shipments/shipments.service';
 import { Subject } from 'rxjs';
+import { InformerService } from '../../service/informer.service';
 
 @Component({
   selector: 'app-products',
@@ -12,7 +13,8 @@ import { Subject } from 'rxjs';
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   constructor(
-    private http: ProductsService
+    private http: ProductsService,
+    private informer: InformerService,
   ) {
   }
 
@@ -27,12 +29,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.prods = res.body;
       }
     }, error => {
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
   }
 

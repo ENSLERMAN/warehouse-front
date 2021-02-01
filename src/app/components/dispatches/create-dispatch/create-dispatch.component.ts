@@ -13,6 +13,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../../users/users.service';
+import { InformerService } from '../../../service/informer.service';
 
 const moment = _rollupMoment || _moment;
 
@@ -32,6 +33,7 @@ export class CreateDispatchComponent implements OnInit, OnDestroy {
   constructor(
     private http: DispatchesService,
     private router: Router,
+    private informer: InformerService,
   ) {
   }
 
@@ -82,12 +84,7 @@ export class CreateDispatchComponent implements OnInit, OnDestroy {
       this.valid = true;
       this.selectedProdsForDispatch = prods;
     }, error => {
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
   }
 
@@ -96,15 +93,11 @@ export class CreateDispatchComponent implements OnInit, OnDestroy {
     this.emp = JSON.parse(localStorage.getItem('user'));
     this.http.makeDispatch(this.emp.user_id, this.selectedDate, prods).subscribe(value => {
       if (value.status === 204) {
+        this.informer.success('Отгрузка создана!');
         this.router.navigate(['/dispatches']);
       }
     }, error => {
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
   }
 
@@ -117,12 +110,7 @@ export class CreateDispatchComponent implements OnInit, OnDestroy {
         });
       }
     }, error => {
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
   }
 

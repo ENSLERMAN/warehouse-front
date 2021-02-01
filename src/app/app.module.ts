@@ -43,6 +43,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { HistoryDispatchesComponent } from './components/dispatches/history-dispatches/history-dispatches.component';
 import { HistoryShipmentComponent } from './components/shipments/history-shipment/history-shipment.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,10 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatDatetimepickerModule,
     MatTabsModule,
     MatButtonToggleModule,
+    ToastrModule.forRoot({
+      timeOut: 10000,
+      positionClass: 'toast-bottom-right'
+    }),
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true},

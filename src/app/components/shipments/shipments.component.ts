@@ -4,6 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { InformerService } from '../../service/informer.service';
 
 @Component({
   selector: 'app-shipments',
@@ -11,7 +12,10 @@ import { MatTableDataSource } from '@angular/material/table';
   styleUrls: ['./shipments.component.scss']
 })
 export class ShipmentsComponent implements OnInit, OnDestroy, AfterViewInit {
-  constructor(private http: ShipmentsService) {
+  constructor(
+    private http: ShipmentsService,
+    private informer: InformerService,
+  ) {
   }
 
   displayedColumns: string[] = ['ship', 'fio-sup', 'fio-emp', 'date', 'barcode', 'amount'];
@@ -30,12 +34,7 @@ export class ShipmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.source.data = res.body;
       this.source.sort = this.sort;
     }, error => {
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
   }
 

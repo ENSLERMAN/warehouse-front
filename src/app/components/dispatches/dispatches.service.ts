@@ -56,7 +56,7 @@ export class DispatchesService {
   makeDispatch(cusID: number, date: string, prods: productsForDispatch[]): Observable<HttpResponse<void>> {
     return this.http.post<void>(`${environment.baseURL}/api/dispatch/new_dispatch`, {
       customer_id: cusID,
-      date_create: date,
+      date_create: date.trim(),
       products: prods
     }, {
       observe: 'response'

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Dispatch, DispatchesService } from './dispatches.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { InformerService } from "../../service/informer.service";
 
 @Component({
   selector: 'app-dispatches',
@@ -28,7 +29,8 @@ import { Subject } from 'rxjs';
 })
 export class DispatchesComponent implements OnInit, OnDestroy {
   constructor(
-    private http: DispatchesService
+    private http: DispatchesService,
+    private informer: InformerService,
   ) {
   }
 
@@ -43,12 +45,7 @@ export class DispatchesComponent implements OnInit, OnDestroy {
         this.dispatches = v.body;
       }
     }, error => {
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
   }
 

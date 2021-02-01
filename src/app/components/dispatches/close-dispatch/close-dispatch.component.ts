@@ -5,6 +5,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { InformerService } from '../../../service/informer.service';
+import { User } from '../../users/users.service';
 
 @Component({
   selector: 'app-close-dispatch',
@@ -18,7 +20,8 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
   constructor(
     private activatedRouter: ActivatedRoute,
     private http: DispatchesService,
-    private router: Router
+    private router: Router,
+    private informer: InformerService,
   ) {
     this.activatedRouter.params.subscribe(param => {
       this.disID = param.id;
@@ -31,8 +34,10 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
   prods: Products[] = [];
   prodsForDispatch: productsForDispatch[] = [];
   errFromDB: boolean;
+  user: User;
 
   ngOnInit(): void {
+    this.user = JSON.parse(localStorage.getItem('user'));
     this.http.getProductsByDispatch(this.disID).pipe(
       takeUntil(this.destroy$)
     ).subscribe(v => {
@@ -41,12 +46,7 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
         this.cusID = this.prods[0].cus_id;
       }
     }, error => {
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
   }
 
@@ -74,16 +74,11 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
         }
       }, error => {
         this.errFromDB = true;
-        alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+        this.informer.error(error);
       });
       return true;
     } else {
-      alert('Введённые данные неверны');
+      this.informer.warn('Введённые данные неверны');
       return false;
     }
   }
@@ -98,12 +93,7 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
       }
     }, error => {
       this.errFromDB = true;
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
   }
 

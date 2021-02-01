@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { HttpService } from '../../service/http.service';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+import { InformerService } from '../../service/informer.service';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-  constructor(private router: Router, private http: HttpService) {
+  constructor(private router: Router, private http: HttpService, private informer: InformerService,) {
   }
 
   private destroy$ = new Subject<void>();
@@ -43,17 +44,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
     ).subscribe((res) => {
       if (res.status === 204) {
         if (!(res instanceof HttpErrorResponse)) {
-          alert('Регистрация прошла успешно! Войдите под созданным логином на сайт.');
+          this.informer.success('Регистрация прошла успешно! Войдите под созданным логином в систему.');
           this.router.navigate(['/login']);
         }
       }
     }, error => {
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
   }
 

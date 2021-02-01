@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
 import { User } from '../users/users.service';
+import { InformerService } from '../../service/informer.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ import { User } from '../users/users.service';
 export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
-    private http: HttpService
+    private http: HttpService,
+    private informer: InformerService,
   ) {
   }
 
@@ -57,12 +59,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     }, error => {
       this.error = true;
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
     return false;
   }

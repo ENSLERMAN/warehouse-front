@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { InformerService } from '../../service/informer.service';
 
 @Component({
   selector: 'app-users',
@@ -14,7 +15,8 @@ import { Router } from '@angular/router';
 export class UsersComponent implements OnInit, OnDestroy {
   constructor(
     private http: UsersService,
-    private router: Router
+    private router: Router,
+    private informer: InformerService,
   ) {
   }
 
@@ -34,12 +36,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.users = v.body;
       }
     }, error => {
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
     this.http.getRoles().pipe(
       takeUntil(this.destroy$)
@@ -48,12 +45,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         this.roles = v.body;
       }
     }, error => {
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
   }
 
@@ -67,15 +59,11 @@ export class UsersComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe(v => {
       if (v.status === 204) {
+        this.informer.success(`Роль успешно изменена!`);
         location.reload(true);
       }
     }, error => {
-      alert(`
-          Message: ${error.message}
-          HttpStatusCode: ${error.code}
-          Error: ${error.error}
-          Description: ${error.description}
-        `);
+      this.informer.error(error);
     });
   }
 
