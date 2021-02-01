@@ -9,7 +9,7 @@ import {
 } from '@angular/material-moment-adapter';
 import { Product } from '../../shipments/shipments.service';
 import { DispatchesService } from '../dispatches.service';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from '../../users/users.service';
@@ -51,6 +51,7 @@ export class CreateDispatchComponent implements OnInit, OnDestroy {
   selectedProdsForDispatch: Product[];
   prods: Product[] = [];
   valid: boolean;
+  spin = false;
 
   ngOnInit(): void {
     this.getProducts();
@@ -89,9 +90,14 @@ export class CreateDispatchComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
+    this.spin = true;
     const prods: Product[] = this.selectedProdsForDispatch;
     this.emp = JSON.parse(localStorage.getItem('user'));
-    this.http.makeDispatch(this.emp.user_id, this.selectedDate, prods).subscribe(value => {
+    this.http.makeDispatch(this.emp.user_id, this.selectedDate, prods).pipe(
+      finalize(() => {
+        this.spin = false;
+      }),
+    ).subscribe(value => {
       if (value.status === 204) {
         this.informer.success('Отгрузка создана!');
         this.router.navigate(['/dispatches']);
@@ -102,7 +108,13 @@ export class CreateDispatchComponent implements OnInit, OnDestroy {
   }
 
   getProducts(): void {
-    this.http.getProducts().pipe(takeUntil(this.destroy$)).subscribe(v => {
+    this.spin = true;
+    this.http.getProducts().pipe(
+      finalize(() => {
+        this.spin = false;
+      }),
+      takeUntil(this.destroy$)
+    ).subscribe(v => {
       if (v.status === 200) {
         this.prods = v.body;
         this.prods.forEach(value => {

@@ -32,6 +32,17 @@ export class ProductsService {
     );
   }
 
+  getProductHistoryByID(id): Observable<HttpResponse<Product[]>> {
+    return this.http.get<Product[]>(`${environment.baseURL}/api/products/get_history?prod_id=${id}`, {
+      observe: 'response'
+    }).pipe(
+      catchError(err => {
+        console.error(err);
+        return throwError(err);
+      })
+    );
+  }
+
   updateProductsByID(
     id: number,
     name: string,

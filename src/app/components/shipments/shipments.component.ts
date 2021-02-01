@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Shipment, ShipmentsService } from './shipments.service';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -22,13 +22,18 @@ export class ShipmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   private destroy$ = new Subject<void>();
   source: MatTableDataSource<Shipment> = new MatTableDataSource();
   @ViewChild(MatSort, {static: false}) sort: MatSort;
+  spin = false;
 
   ngOnInit(): void {
     this.initShipments();
   }
 
   initShipments(): void {
+    this.spin = true;
     this.http.getShipments().pipe(
+      finalize(() => {
+        this.spin = false;
+      }),
       takeUntil(this.destroy$),
     ).subscribe(res => {
       this.source.data = res.body;

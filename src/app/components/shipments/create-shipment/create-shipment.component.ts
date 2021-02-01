@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Product, ShipmentsService } from '../shipments.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { User } from '../../users/users.service';
 import { InformerService } from '../../../service/informer.service';
@@ -35,8 +35,10 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
   dynamicForm: FormGroup;
   supps: User[];
   emp: User;
+  spin = false;
 
   ngOnInit(): void {
+    this.spin = true;
     this.http.getSuppliers().pipe(
       takeUntil(this.destroy$)
     ).subscribe(v => {
@@ -47,6 +49,9 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
       this.informer.error(error);
     });
     this.http.getProducts().pipe(
+      finalize(() => {
+        this.spin = false;
+      }),
       takeUntil(this.destroy$)
     ).subscribe(res => {
       if (res.status === 200) {
@@ -109,6 +114,7 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
+    this.spin = true;
     if (this.dynamicForm.invalid) {
       return;
     }
@@ -116,7 +122,11 @@ export class CreateShipmentComponent implements OnInit, OnDestroy {
     const suppID: User = this.fg.controls.suppSelected.value;
     this.emp = JSON.parse(localStorage.getItem('user'));
     // @ts-ignore
-    this.http.makeShipment(suppID.id, this.emp.user_id, prods).subscribe(value => {
+    this.http.makeShipment(suppID.id, this.emp.user_id, prods).pipe(
+      finalize(() => {
+        this.spin = false;
+      }),
+    ).subscribe(value => {
       if (value.status === 204) {
         this.informer.success('Поставка создана! Пожалуйста отгрузите прибывшие товары на склад.');
         this.router.navigate(['/shipments']);

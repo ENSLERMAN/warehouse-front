@@ -44,6 +44,8 @@ import { HistoryDispatchesComponent } from './components/dispatches/history-disp
 import { HistoryShipmentComponent } from './components/shipments/history-shipment/history-shipment.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { ToastrModule } from 'ngx-toastr';
+import { HistoryProductComponent } from './components/products/history-product/history-product.component';
+import { LoadingComponent } from './components/helpers/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { ToastrModule } from 'ngx-toastr';
     ProductsComponent,
     EditProductComponent,
     HistoryDispatchesComponent,
-    HistoryShipmentComponent
+    HistoryShipmentComponent,
+    HistoryProductComponent,
+    LoadingComponent
   ],
   imports: [
     HttpClientModule,

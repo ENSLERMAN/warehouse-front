@@ -18,6 +18,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
   registerForm: FormGroup;
+  spin = false;
 
   ngOnInit(): void {
     this.registerForm = new FormGroup({
@@ -30,6 +31,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   register(): void {
+    this.spin = true;
     this.http.register(
       this.registerForm.value.login,
       this.registerForm.value.password,
@@ -38,6 +40,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.registerForm.value.patronymic
     ).pipe(
       finalize(() => {
+        this.spin = false;
         this.registerForm.setValue({login: '', pass: '', name: '', surname: '', patronymic: ''});
       }),
       takeUntil(this.destroy$)

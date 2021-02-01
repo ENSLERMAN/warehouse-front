@@ -2,7 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { ActivatedRoute, Router } from '@angular/router';
 import { DispatchesService, Products, productsForDispatch } from '../dispatches.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { InformerService } from '../../../service/informer.service';
@@ -35,10 +35,15 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
   prodsForDispatch: productsForDispatch[] = [];
   errFromDB: boolean;
   user: User;
+  spin = false;
 
   ngOnInit(): void {
+    this.spin = true;
     this.user = JSON.parse(localStorage.getItem('user'));
     this.http.getProductsByDispatch(this.disID).pipe(
+      finalize(() => {
+        this.spin = false;
+      }),
       takeUntil(this.destroy$)
     ).subscribe(v => {
       if (v.status === 200) {
@@ -65,8 +70,12 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
       });
     });
     if (this.prodsForDispatch.length !== 0 && this.prods.length === this.prodsForDispatch.length) {
+      this.spin = true;
       const emp = JSON.parse(localStorage.getItem('user'));
       this.http.closeDispatch(this.disID, emp.user_id, this.cusID, this.prodsForDispatch).pipe(
+        finalize(() => {
+          this.spin = false;
+        }),
         takeUntil(this.destroy$)
       ).subscribe(v => {
         if (v.status === 204) {
@@ -84,8 +93,12 @@ export class CloseDispatchComponent implements OnInit, OnDestroy {
   }
 
   refuseDispatch(): void {
+    this.spin = true;
     const emp = JSON.parse(localStorage.getItem('user'));
     this.http.refuseDispatch(emp.user_id, this.cusID, this.disID).pipe(
+      finalize(() => {
+        this.spin = false;
+      }),
       takeUntil(this.destroy$)
     ).subscribe(v => {
       if (v.status === 204) {

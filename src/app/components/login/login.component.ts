@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   hide = true;
   error = false;
   user: User;
+  spin = false;
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -35,11 +36,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login(): boolean {
+    this.spin = true;
     this.http.login(
       this.loginForm.value.login,
       this.loginForm.value.pass
     ).pipe(
       finalize(() => {
+        this.spin = false;
         this.loginForm.setValue({login: '', pass: ''});
       }),
       takeUntil(this.destroy$)

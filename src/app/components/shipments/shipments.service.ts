@@ -30,13 +30,13 @@ export interface Product {
   amount: number;
   price: number;
   barcode: string;
+  is_delete?: boolean;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShipmentsService {
-
   constructor(private http: HttpClient) {
   }
 

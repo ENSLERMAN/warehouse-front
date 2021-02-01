@@ -3,7 +3,7 @@ import { Shipment, ShipmentsService } from '../shipments.service';
 import { Subject } from 'rxjs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { InformerService } from '../../../service/informer.service';
 
 @Component({
@@ -19,13 +19,18 @@ export class HistoryShipmentComponent implements OnInit, OnDestroy, AfterViewIni
   private destroy$ = new Subject<void>();
   source: MatTableDataSource<Shipment> = new MatTableDataSource();
   @ViewChild(MatSort, {static: false}) sort: MatSort;
+  spin = false;
 
   ngOnInit(): void {
     this.initShipments();
   }
 
   initShipments(): void {
+    this.spin = true;
     this.http.getShipmentsHistory().pipe(
+      finalize(() => {
+        this.spin = false;
+      }),
       takeUntil(this.destroy$),
     ).subscribe(res => {
       this.source.data = res.body;

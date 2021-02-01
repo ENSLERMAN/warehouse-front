@@ -1,7 +1,11 @@
 <app-loading *ngIf="spin === true"></app-loading>
 <div class="d-flex justify-content-between m-2">
-    <app-button-back></app-button-back>
-    <h2>Таблица товаров</h2>
+    <button mat-raised-button
+            color="warn"
+            [routerLink]="['/products']"
+    >Вернуться назад
+    </button>
+    <h2>История товара с ID {{prodID}}</h2>
     <div style="width: 10%"></div>
 </div>
 
@@ -15,22 +19,18 @@
             <th scope="col">Кол-во в наличии</th>
             <th scope="col">Цена за шт.</th>
             <th scope="col">Баркод</th>
-            <th></th>
-            <th></th>
+            <th scope="col">Удалён?</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let item of prods" style="cursor: pointer">
+        <tr *ngFor="let item of prods">
             <th scope="row">{{item.id}}</th>
             <td>{{item.name}}</td>
             <td>{{item.description}}</td>
             <td>{{item.amount}}</td>
             <td>{{item.price}}</td>
             <td>{{item.barcode}}</td>
-            <td><button mat-flat-button color="accent"
-                        [routerLink]="['/products/history/', item.id]">Посмотреть историю</button></td>
-            <td><button mat-flat-button color="primary"
-                        [routerLink]="['/products/', item.id]">Редактировать</button></td>
+            <td>{{item.is_delete}}</td>
         </tr>
         </tbody>
     </table>

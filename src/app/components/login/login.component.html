@@ -1,3 +1,4 @@
+<app-loading *ngIf="spin === true"></app-loading>
 <div class="">
     <div class="d-flex justify-content-center">
         <form class="mt-5" [formGroup]="loginForm" (ngSubmit)="login()">

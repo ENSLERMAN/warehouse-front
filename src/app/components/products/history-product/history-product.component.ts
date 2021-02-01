@@ -1,30 +1,37 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { finalize, takeUntil } from 'rxjs/operators';
-import { ProductsService } from './products.service';
-import { Product } from '../shipments/shipments.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ProductsService } from '../products.service';
+import { InformerService } from '../../../service/informer.service';
 import { Subject } from 'rxjs';
-import { InformerService } from '../../service/informer.service';
+import { Product } from '../../shipments/shipments.service';
 
 @Component({
-  selector: 'app-products',
-  templateUrl: './products.component.html',
-  styleUrls: ['./products.component.scss'],
+  selector: 'app-history-product',
+  templateUrl: './history-product.component.html',
+  styleUrls: ['./history-product.component.scss'],
   providers: [ProductsService]
 })
-export class ProductsComponent implements OnInit, OnDestroy {
+export class HistoryProductComponent implements OnInit, OnDestroy {
   constructor(
+    private activatedRouter: ActivatedRoute,
     private http: ProductsService,
+    private router: Router,
     private informer: InformerService,
   ) {
+    this.activatedRouter.params.subscribe(param => {
+      this.prodID = param.id;
+    });
   }
 
+  prodID: number;
   private destroy$ = new Subject<void>();
-  prods: Product[] = [];
+  prods: Product[];
   spin = false;
 
   ngOnInit(): void {
     this.spin = true;
-    this.http.getProducts().pipe(
+    this.http.getProductHistoryByID(this.prodID).pipe(
       finalize(() => {
         this.spin = false;
       }),

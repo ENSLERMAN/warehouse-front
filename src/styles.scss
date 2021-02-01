@@ -20,3 +20,12 @@ $theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 button {
   outline: none !important;
 }
+
+.mat-spin {
+  margin: 0;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 5000;
+}

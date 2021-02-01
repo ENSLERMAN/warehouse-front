@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Dispatch, DispatchesService } from './dispatches.service';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { InformerService } from "../../service/informer.service";
 
@@ -36,9 +36,14 @@ export class DispatchesComponent implements OnInit, OnDestroy {
 
   dispatches: Dispatch[] = [];
   private destroy$ = new Subject<void>();
+  spin = false;
 
   ngOnInit(): void {
+    this.spin = true;
     this.http.getDispathes().pipe(
+      finalize(() => {
+        this.spin = false;
+      }),
       takeUntil(this.destroy$)
     ).subscribe(v => {
       if (v.status === 200) {

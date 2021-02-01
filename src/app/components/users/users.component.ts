@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Role, User, UsersService } from './users.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { InformerService } from '../../service/informer.service';
@@ -27,9 +27,14 @@ export class UsersComponent implements OnInit, OnDestroy {
     user: new FormControl(null, [Validators.required]),
     role: new FormControl(null, [Validators.required]),
   });
+  spin = false;
 
   ngOnInit(): void {
+    this.spin = true;
     this.http.getUsers().pipe(
+      finalize(() => {
+        this.spin = false;
+      }),
       takeUntil(this.destroy$)
     ).subscribe(v => {
       if (v.status === 200) {
@@ -38,7 +43,11 @@ export class UsersComponent implements OnInit, OnDestroy {
     }, error => {
       this.informer.error(error);
     });
+    this.spin = true;
     this.http.getRoles().pipe(
+      finalize(() => {
+        this.spin = false;
+      }),
       takeUntil(this.destroy$)
     ).subscribe(v => {
       if (v.status === 200) {
@@ -50,12 +59,16 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   changeRole(): void {
+    this.spin = true;
     const userID = this.fg.controls.user.value;
     const roleID = this.fg.controls.role.value;
     this.http.changeRole(
       userID,
       roleID
     ).pipe(
+      finalize(() => {
+        this.spin = false;
+      }),
       takeUntil(this.destroy$)
     ).subscribe(v => {
       if (v.status === 204) {

@@ -1,10 +1,12 @@
+<app-loading *ngIf="spin === true"></app-loading>
 <div class="container-fluid my-3">
     <div class="d-flex justify-content-between">
         <app-button-back></app-button-back>
         <h1>Поставки</h1>
         <mat-button-toggle-group>
             <mat-button-toggle routerLink="/shipments/history">История поставок</mat-button-toggle>
-            <mat-button-toggle routerLink="/shipments/create_shipment">Создать новую поставку</mat-button-toggle>
+            <mat-button-toggle routerLink="/shipments/create_shipment"
+            style="background-color: #4d5ecf; color: white">Создать новую поставку</mat-button-toggle>
         </mat-button-toggle-group>
     </div>
     <div class="mt-3">

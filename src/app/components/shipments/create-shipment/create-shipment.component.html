@@ -1,3 +1,4 @@
+<app-loading *ngIf="spin === true"></app-loading>
 <div class="container-fluid my-3">
     <div class="d-flex justify-content-between">
         <button mat-raised-button color="warn" routerLink="/shipments">Вернуться назад</button>
@@ -7,7 +8,7 @@
     <div class="w-50 my-5 mx-auto">
         <div>
             <form [formGroup]="fg" class="w-100 d-flex flex-column" (ngSubmit)="onSubmit()">
-                <h3>Выберите товар из списка, и/или добавьте новый</h3>
+                <h3>Вы можете добавить товар из списка, и/или добавить новый</h3>
                 <mat-form-field appearance="fill">
                     <mat-label>Выберите товар из списка</mat-label>
                     <mat-select multiple formControlName="productsSelected" class="w-100">
@@ -38,9 +39,9 @@
             <hr>
             <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()" class="w-100 d-flex flex-column">
                 <mat-form-field appearance="fill">
-                    <mat-label>Выберите кол-во нового товара</mat-label>
+                    <mat-label>Какое кол-во новой номенклатуры прибыло на склад?</mat-label>
                     <mat-select formControlName="numberOfTickets">
-                        <mat-option *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10]" [value]="i">{{i}}</mat-option>
+                        <mat-option *ngFor="let i of [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]" [value]="i">{{i}}</mat-option>
                     </mat-select>
                 </mat-form-field>
 

@@ -3,9 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsService } from '../products.service';
 import { Product } from '../../shipments/shipments.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { finalize, takeUntil } from 'rxjs/operators';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { InformerService } from "../../../service/informer.service";
+import { InformerService } from '../../../service/informer.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -35,11 +35,17 @@ export class EditProductComponent implements OnInit, OnDestroy {
   });
   private destroy$ = new Subject<void>();
   prodID: number;
+  spin = false;
 
   ngOnInit(): void {
+    this.spin = true;
     this.http.getProductsByID(this.prodID).pipe(
+      finalize(() => {
+        this.spin = false;
+      }),
       takeUntil(this.destroy$)
     ).subscribe(v => {
+      this.spin = false;
       if (v.status === 200) {
         this.product = v.body;
         this.fg = new FormGroup({
@@ -56,6 +62,7 @@ export class EditProductComponent implements OnInit, OnDestroy {
   }
 
   onSave(): void {
+    this.spin = true;
     const c = confirm('Вы уверены что обновить товар?');
     if (c === true) {
       this.http.updateProductsByID(
@@ -64,6 +71,9 @@ export class EditProductComponent implements OnInit, OnDestroy {
         this.fg.controls.description.value,
         parseInt(this.fg.controls.price.value, 10)
       ).pipe(
+        finalize(() => {
+          this.spin = false;
+        }),
         takeUntil(this.destroy$)
       ).subscribe(v => {
         if (v.status === 204) {
@@ -79,6 +89,9 @@ export class EditProductComponent implements OnInit, OnDestroy {
     const c = confirm('Вы уверены что хотите удалить товар?');
     if (c === true) {
       this.http.deleteProductsByID(this.product.id).pipe(
+        finalize(() => {
+          this.spin = false;
+        }),
         takeUntil(this.destroy$)
       ).subscribe(v => {
         if (v.status === 204) {

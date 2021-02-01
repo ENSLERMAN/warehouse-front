@@ -1,4 +1,7 @@
 <div class="container-fluid">
+    <h1 class="text-center m-3">Добро пожаловать в информационную систему склада предприятия!</h1>
+</div>
+<div class="container-fluid">
     <div class="row row-cols-1 row-cols-md-3 g-4 m-1">
         <div *ngFor="let section of sections" class="col">
             <ng-container *ngIf="section.access === user.access_id || user.access_id === 1">
