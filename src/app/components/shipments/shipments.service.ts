@@ -35,7 +35,7 @@ export interface Product {
   providedIn: 'root'
 })
 export class ShipmentsService {
-  private baseURL = 'http://localhost:8080';
+  private baseURL = 'http://backend.enslerman.ru:8060';
 
   constructor(private http: HttpClient) {
   }
