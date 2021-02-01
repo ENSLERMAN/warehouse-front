@@ -25,6 +25,10 @@ export class InformerService {
     `, 'Ошибка!');
   }
 
+  errorMessage(err: string): void {
+    this.toastr.error(err, 'Ошибка!');
+  }
+
   warn(err: string): void {
     this.toastr.warning(err, 'Предупреждение!');
   }
