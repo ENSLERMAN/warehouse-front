@@ -9,6 +9,21 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./history-dispatches.component.scss'],
   providers: [
     DispatchesService
+  ],
+  styles: [
+    `
+        .back_color1 {
+            background-color: #ecf0ff;
+        }
+
+        .back_color2 {
+            background-color: #e5ffe9;
+        }
+
+        .back_color3 {
+            background-color: #ffe4e4;
+        }
+    `
   ]
 })
 export class HistoryDispatchesComponent implements OnInit, OnDestroy {

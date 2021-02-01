@@ -13,15 +13,15 @@ import { Subject } from 'rxjs';
   styles: [
     `
         .back_color1 {
-            background-color: #e6efff;
+            background-color: #ecf0ff;
         }
 
         .back_color2 {
-            background-color: #d3ffdb;
+            background-color: #e5ffe9;
         }
 
         .back_color3 {
-            background-color: #ffe6e6;
+            background-color: #ffe4e4;
         }
     `
   ]
