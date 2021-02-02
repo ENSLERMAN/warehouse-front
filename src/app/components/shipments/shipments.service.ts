@@ -8,15 +8,15 @@ import { environment } from '../../../environments/environment';
 export interface Shipment {
   id: number;
   supplier_id: number;
-  supplier_surname: string;
-  supplier_name: string;
-  supplier_pat: string;
-  supplier_fio: string;
+  supplier_surname?: string;
+  supplier_name?: string;
+  supplier_pat?: string;
+  supplier_fio?: string;
   employee_id: number;
-  employee_surname: string;
-  employee_name: string;
-  employee_fio: string;
-  employee_pat: string;
+  employee_surname?: string;
+  employee_name?: string;
+  employee_fio?: string;
+  employee_pat?: string;
   date: string;
   product_barcode: string;
   product_amount: number;
@@ -62,13 +62,6 @@ export class ShipmentsService {
     return this.http.get<Shipment[]>(`${environment.baseURL}/api/shipments/history`, {
       observe: 'response'
     }).pipe(
-      map(res => {
-        res.body.forEach((v) => {
-          v.supplier_fio = `${v.supplier_surname} ${v.supplier_name} ${v.supplier_pat}`;
-          v.employee_fio = `${v.employee_surname} ${v.employee_name} ${v.employee_pat}`;
-        });
-        return res;
-      }),
       catchError(err => {
         console.error(err);
         return throwError(err);

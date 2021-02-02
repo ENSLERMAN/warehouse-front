@@ -14,16 +14,18 @@ export interface productsForDispatch {
 export interface Dispatch {
   dispatch_id: number;
   emp_id: number;
-  emp_surname: string;
-  emp_name: string;
-  emp_pat: string;
+  emp_surname?: string;
+  emp_name?: string;
+  emp_pat?: string;
+  emp_fio?: string;
   status_id: number;
   status_name: string;
   dispatch_date: string;
   cus_id: number;
-  cus_surname: string;
-  cus_name: string;
-  cus_pat: string;
+  cus_surname?: string;
+  cus_name?: string;
+  cus_pat?: string;
+  cus_fio?: string;
 }
 
 export interface Products {

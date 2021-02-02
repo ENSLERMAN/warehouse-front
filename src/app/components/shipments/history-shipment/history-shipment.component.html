@@ -16,13 +16,29 @@
             <ng-container matColumnDef="fio-sup">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>ФИО поставщика</th>
                 <td mat-cell
-                    *matCellDef="let element">{{element.supplier_fio}}</td>
+                    *matCellDef="let element">
+                    <ng-template
+                            *ngIf="element.supplier_surname !== undefined else emp_fio">
+                        {{element.supplier_surname}} {{element.supplier_name}} {{element.supplier_pat}}
+                    </ng-template>
+                    <ng-template #emp_fio>
+                        {{element.supplier_fio}}
+                    </ng-template>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="fio-emp">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>ФИО сотрудника</th>
                 <td mat-cell
-                    *matCellDef="let element">{{element.employee_fio}}</td>
+                    *matCellDef="let element">
+                    <ng-template
+                            *ngIf="element.employee_name !== undefined else emp_fio">
+                        {{element.employee_surname}} {{element.employee_name}} {{element.employee_pat}}
+                    </ng-template>
+                    <ng-template #emp_fio>
+                        {{element.employee_fio}}
+                    </ng-template>
+                </td>
             </ng-container>
 
             <ng-container matColumnDef="date">

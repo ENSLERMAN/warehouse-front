@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Dispatch, DispatchesService } from './dispatches.service';
 import { finalize, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { InformerService } from "../../service/informer.service";
+import { InformerService } from '../../service/informer.service';
 
 @Component({
   selector: 'app-dispatches',
