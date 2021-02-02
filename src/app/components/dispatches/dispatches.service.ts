@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Product } from '../shipments/shipments.service';
 import { environment } from '../../../environments/environment';
 
@@ -85,6 +85,18 @@ export class DispatchesService {
     return this.http.get<Dispatch[]>(`${environment.baseURL}/api/dispatch/history`, {
       observe: 'response'
     }).pipe(
+      map(res => {
+        res.body.forEach((v) => {
+          console.log(v);
+          if (v.emp_fio === '' || v.emp_fio === null) {
+            v.emp_fio = `${v.emp_surname} ${v.emp_name} ${v.emp_pat}`;
+          }
+          if (v.cus_fio === '') {
+            v.cus_fio = `${v.cus_surname} ${v.cus_name} ${v.cus_pat}`;
+          }
+        });
+        return res;
+      }),
       catchError(err => {
         console.error(err);
         return throwError(err);

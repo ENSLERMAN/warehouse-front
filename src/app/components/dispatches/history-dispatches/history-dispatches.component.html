@@ -22,23 +22,8 @@
             <th scope="row">{{item.dispatch_id}}</th>
             <td>{{item.dispatch_date | date:'dd.MM.yyyy HH:mm:ss z':'+0300'}}</td>
             <td>{{item.status_name}}</td>
-            <td>
-                <ng-template
-                        *ngIf="item.cus_surname !== undefined else cus_fio">
-                    {{item.cus_surname}} {{item.cus_name}} {{item.cus_pat}}
-                </ng-template>
-                <ng-template #cus_fio>
-                    {{item.cus_fio}}
-                </ng-template>
-            </td>
-            <td>
-                <ng-template *ngIf="item.emp_surname !== undefined else emp_fio">
-                    {{item.emp_surname}} {{item.emp_name}} {{item.emp_pat}}
-                </ng-template>
-                <ng-template #emp_fio>
-                    {{item.emp_fio}}
-                </ng-template>
-            </td>
+            <td>{{item.cus_fio}}</td>
+            <td><ng-template [ngIf]="item.emp_fio !== 'null null null'">{{item.emp_fio}}</ng-template></td>
         </tr>
         </tbody>
     </table>

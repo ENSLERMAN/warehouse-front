@@ -62,6 +62,15 @@ export class ShipmentsService {
     return this.http.get<Shipment[]>(`${environment.baseURL}/api/shipments/history`, {
       observe: 'response'
     }).pipe(
+      map(res => {
+        res.body.forEach((v) => {
+          if (v.employee_fio === '' && v.supplier_fio === '') {
+            v.supplier_fio = `${v.supplier_surname} ${v.supplier_name} ${v.supplier_pat}`;
+            v.employee_fio = `${v.employee_surname} ${v.employee_name} ${v.employee_pat}`;
+          }
+        });
+        return res;
+      }),
       catchError(err => {
         console.error(err);
         return throwError(err);

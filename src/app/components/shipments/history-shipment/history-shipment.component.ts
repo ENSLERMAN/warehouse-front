@@ -12,7 +12,7 @@ import { InformerService } from '../../../service/informer.service';
   styleUrls: ['./history-shipment.component.scss']
 })
 export class HistoryShipmentComponent implements OnInit, OnDestroy, AfterViewInit {
-  constructor(private http: ShipmentsService, private informer: InformerService,) {
+  constructor(private http: ShipmentsService, private informer: InformerService) {
   }
 
   displayedColumns: string[] = ['ship', 'fio-sup', 'fio-emp', 'date', 'barcode', 'amount'];
